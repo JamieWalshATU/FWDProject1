@@ -56,4 +56,11 @@ export class CourseDetailsPage implements OnInit {
   viewQuestions(questionSet: QuestionSet): void {
     this.selectedQuestionSet = questionSet; // Set the selected question set
   }
+
+  deleteCourse(): void {
+    if (this.courseId) {
+      this.courseData.deleteCourseById(this.courseId); // Call the service method
+      window.history.back(); // Navigate back after deletion
+    }
+  }
 }

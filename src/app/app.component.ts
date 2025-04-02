@@ -26,5 +26,10 @@ export class AppComponent {
     }
     );
   }
+
+  deleteCourse(id: string): void {
+    this.courseData.deleteCourseById(id); // Call the service method
+    this.courses = this.courseData.getCourseDetails(); // Refresh the course list
+  }
 }
 

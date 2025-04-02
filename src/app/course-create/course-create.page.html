@@ -14,11 +14,20 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item>
-    <input [(ngModel)]="courseName" placeholder="Enter course name">
-  </ion-item>
-  <ion-item>
-    <input [(ngModel)]="courseColor" type="color">
-  </ion-item>
-  <ion-button expand="full" (click)="generateCourse()">Create Course</ion-button>
+  <div class="sidebar" style="position: absolute; left: 0; width: 270px; padding: 16px; background-color: darkgray; min-height: 100%;">
+    <ion-item>
+      <input [(ngModel)]="courseName" placeholder="Enter course name">
+    </ion-item>
+    <ion-item>
+      <input [(ngModel)]="courseColor" type="color">
+    </ion-item>
+    <ion-button expand="full" (click)="generateCourse()">Create Course</ion-button>
+  </div>
+
+  <ion-list style="margin-left: 300px;">
+    <ion-item *ngFor="let course of courses">
+      <ion-label [style.color]="course.color">{{ course.name }}</ion-label>
+      <ion-button slot="end" (click)="deleteCourse(course.id)">Delete</ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

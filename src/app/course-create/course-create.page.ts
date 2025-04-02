@@ -1,3 +1,4 @@
+import { Course } from './../course.model';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,18 +11,24 @@ import { RouterModule } from '@angular/router';
   templateUrl: './course-create.page.html',
   styleUrls: ['./course-create.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonItem, IonButtons, IonMenuButton, RouterModule],
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonItem, IonButtons, IonMenuButton, RouterModule, IonList, IonLabel],
 })
 export class CourseCreatePage implements OnInit {
   constructor(public courseData: CourseData) {}
+  
+  courses: Course[] = [];
 
   courseName: string = '';
   courseColor: string = '';
 
   ngOnInit(): void {
+    this.loadCourses();
   }
+  loadCourses() {
+    this.courses = this.courseData.getCourseDetails();
+  }
+  
   generateCourse() {
-
     if (this.courseName === '' || this.courseColor === '') {
       alert('Please fill in all fields');
       return;
@@ -32,8 +39,18 @@ export class CourseCreatePage implements OnInit {
       return;
     }
 
-    this.courseData.createCourse(this.courseName, this.courseColor);
-    console.log(this.courseData.getCourseDetails());
+    this.courseData.createCourse(this.courseName, this.courseColor)
+      .then(() => {
+        // Refresh the courses list after creating a new course
+        this.loadCourses();
+        // Clear the form
+        this.courseName = '';
+        this.courseColor = '';
+      });
   }
 
+  deleteCourse(id: string): void {
+    this.courseData.deleteCourseById(id); // Call the service method
+    this.loadCourses(); // Refresh the course list
+  }
 }

@@ -57,4 +57,15 @@ export class CourseData {
     await this.storage.set('courses', JSON.stringify(this.courses));
   }
 
+  deleteCourseById(id: string): void {
+    const courseIndex = this.courses.findIndex(course => course.id === id);
+    if (courseIndex !== -1) {
+      this.courses.splice(courseIndex, 1); // Remove the course from the array
+      this.saveToStorage(); // Persist the changes
+      console.log(`Course with ID ${id} deleted.`);
+    } else {
+      console.error(`Course with ID ${id} not found.`);
+    }
+  }
+
 }
