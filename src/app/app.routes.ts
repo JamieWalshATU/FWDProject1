@@ -18,5 +18,9 @@ export const routes: Routes = [
     path: 'about',
     loadComponent: () => import('./about/about.page').then( m => m.AboutPage)
   },
+  {
+    path: 'mcqtest/:courseId/:questionSetId',
+    loadComponent: () => import('./mcqtest/mcqtest.page').then( m => m.MCQTestPage)
+  },
 
 ];

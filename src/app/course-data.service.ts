@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Course } from './course.model'; 
+import { Course, QuestionSet } from './course.model'; 
 import { Storage } from '@ionic/storage-angular';
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,11 @@ export class CourseData {
 
   getCourseDetails() {
     return this.courses;
+  }
+
+  getSetById(id: string): QuestionSet | undefined {
+    const course = this.courses.find((course) => course.id === id);
+    return course?.questionSets.find((set) => set.id === id);
   }
 
   async getCourseById(id: string): Promise<Course | undefined> {
@@ -67,5 +72,6 @@ export class CourseData {
       console.error(`Course with ID ${id} not found.`);
     }
   }
+
 
 }

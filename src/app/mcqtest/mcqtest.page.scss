@@ -1,0 +1,52 @@
+.radio-options {
+  display: flex;
+  flex-direction: column; /* Stack radio buttons vertically */
+  margin-top: 10px; /* Add spacing between the question and answers */
+}
+
+.radio-item {
+  align-items: center; /* Center-align radio buttons and labels */
+  --inner-padding-end: 0; /* Remove extra padding on the right */
+}
+
+ion-radio-group {
+  width: 100%; /* Ensure the radio group takes up the full width */
+  display: block;
+}
+
+ion-item {
+  --inner-padding-end: 0; /* Prevent squishing of content */
+}
+
+ion-label {
+  white-space: normal; /* Allow labels to wrap to the next line if needed */
+}
+
+.question-container {
+  margin: 20px 16px;
+}
+
+ion-card {
+  margin-bottom: 0;
+}
+
+ion-list {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+ion-radio-group ion-list-header {
+  padding-left: 0;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.no-questions {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--ion-color-medium);
+}
+
+.submit-button {
+  margin: 20px 16px;
+}

@@ -8,21 +8,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Course Details</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-card *ngIf="course">
+  <ion-card *ngIf="course" style="margin: 20px;">
     <ion-card-header>
       <ion-card-title [style.color]="course.color">{{ course.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-item lines="none">
-        <ion-label>Course ID: {{ courseId }}</ion-label>
-      </ion-item>
-      
       <ion-item lines="none" *ngIf="course?.description">
         <ion-label>Course Description: {{ course.description }}</ion-label>
       </ion-item>
@@ -31,40 +21,51 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="course?.questionSets?.length ?? 0 > 0">
-    <ion-card-header>
-      <ion-card-title>Generated Question Sets</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let questionSet of course?.questionSets; let i = index">
-          <ion-button 
-            expand="block" 
-            (click)="viewQuestions(questionSet)" 
-            [style.--background]="course?.color">
-            {{ questionSet.name }}
-          </ion-button>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card *ngIf="selectedQuestionSet">
-    <ion-card-header>
-      <ion-card-title>{{ selectedQuestionSet.name }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let question of selectedQuestionSet.questions" lines="full">
-          <ion-label class="ion-text-wrap">
-            <h2><strong>Question:</strong> {{ question.question }}</h2>
-            <p><strong>Correct Answer:</strong> {{ question.correctAnswer }}</p>
-            <p><strong>Wrong Answer 1:</strong> {{ question.wrongAnswers[0] }}</p>
-            <p><strong>Wrong Answer 2:</strong> {{ question.wrongAnswers[1] }}</p>
-            <p><strong>Wrong Answer 3:</strong> {{ question.wrongAnswers[2] }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+  <!-- Split view layout for question sets and questions -->
+  <div class="split-view" *ngIf="course?.questionSets?.length">
+    <!-- Left side - Question Sets -->
+    <div class="sets-panel">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Question Sets</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item 
+              *ngFor="let questionSet of course?.questionSets; let i = index" 
+              [class.selected]="selectedQuestionSet?.id === questionSet.id"
+              (click)="viewQuestions(questionSet)">
+              <ion-label>{{ questionSet.name }}</ion-label>
+              <ion-badge slot="end" [style.--background]="course?.color">
+                {{ questionSet.questions.length }} Q
+              </ion-badge>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    
+    <!-- Right side - Questions -->
+    <div class="questions-panel">
+      <ion-card *ngIf="selectedQuestionSet" class="question-set-card">
+        <ion-card-header>
+          <ion-card-title>{{ selectedQuestionSet.name }}</ion-card-title>
+          <ion-card-subtitle>{{ selectedQuestionSet.questions.length }} questions</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-accordion-group>
+            <ion-accordion *ngFor="let question of selectedQuestionSet.questions; let i = index">
+              <ion-item slot="header">
+                <ion-label class="ion-text-wrap">{{ question.question }}</ion-label>
+              </ion-item>
+              <div slot="content" class="question-content">
+                <strong>Correct Answer: {{ question.correctAnswer }}</strong>
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+          <ion-button expand="full" (click)="takeTest(selectedQuestionSet)">Take Test</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>

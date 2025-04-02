@@ -2,3 +2,53 @@
     width: 200px;
     padding-right: 15px;
   }
+
+.split-view {
+  display: flex;
+  height: calc(100% - 160px); 
+  padding: 0 16px;
+  margin-top: 16px;
+}
+
+.sets-panel {
+  width: 300px;
+  margin-right: 16px;
+  overflow-y: auto;
+}
+
+.questions-panel {
+  flex: 1;
+  overflow-y: auto;
+}
+
+ion-item.selected {
+  --background: rgba(var(--ion-color-primary-rgb), 0.1);
+  --border-color: var(--ion-color-primary);
+  font-weight: bold;
+}
+
+.question-content {
+  padding: 16px;
+}
+
+.no-selection {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+@media (max-width: 768px) {
+  .split-view {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .sets-panel {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+}

@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>MCQ Test</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Results view -->
+  <div *ngIf="submitted" class="results-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Test Results</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <h2>Your Score: {{ score }} / {{ totalQuestions }}</h2>
+        <p>Percentage: {{ (score / totalQuestions) * 100 | number:'1.0-0' }}%</p>
+        <ion-button expand="block" (click)="retakeTest()">Retake Test</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Questions view -->
+  <div *ngIf="!submitted">
+    <div *ngIf="!selectedQuestionSet" class="no-questions">
+      <p>No question set selected or no questions available.</p>
+    </div>
+
+    <div *ngIf="selectedQuestionSet" class="questions-container">
+      <div class="question-container" *ngFor="let question of selectedQuestionSet?.questions; let i = index">
+        <!-- Question -->
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Question {{ i + 1 }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ question.question }}</p>
+          </ion-card-content>
+        </ion-card>
+
+        <!-- Answers -->
+        <ion-list>
+          <ion-radio-group (ionChange)="handleChange($event, i)">
+            <ion-list-header>
+              <ion-label>Select your answer:</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let option of question.shuffledAnswers" lines="full">
+              <ion-label>{{ option }}</ion-label>
+              <ion-radio slot="start" [value]="option"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </div>
+
+      <!-- Submit button -->
+      <ion-button expand="block" (click)="submitAnswers()">Submit Answers</ion-button>
+    </div>
+  </div>
+</ion-content>

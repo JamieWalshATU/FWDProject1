@@ -4,6 +4,7 @@ export interface McqQuestion {
   question: string;
   correctAnswer: string;
   wrongAnswers: string[];
+  shuffledAnswers?: string[]; // Optional property to store shuffled answers, created in MCQTestPage so each test has its own shuffled answers
 } // Define the structure of a multiple choice question
 
 export interface QuestionSet {
