@@ -52,6 +52,10 @@ yarn-error.log
 !.vscode/extensions.json
 .history/*
 
+# Environment files containing sensitive data
+/src/environments/environment.ts
+/src/environments/environment.prod.ts
+/src/environments/environment.*.ts
 
 # Miscellaneous
 /.angular
@@ -68,3 +72,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+src/environments/environment.ts
+src/environments/environment.prod.ts
+src/environments/*

@@ -1,3 +1,22 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item routerLink="/course-create">Create Course</ion-item>
+        <ng-container *ngFor="let course of courses">
+          <ion-item 
+            [style.color]="course.color" 
+            [routerLink]="'/course-details/' + course.id">
+            {{ course.name }}
+          </ion-item>
+        </ng-container>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>
