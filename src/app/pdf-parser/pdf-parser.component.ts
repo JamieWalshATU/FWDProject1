@@ -16,18 +16,22 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 })
 export class PdfParserComponent  implements OnInit {
   private apiKey = environment.MISTRAL_API_KEY;
+  //private apiKey = ""; Used for error testing
   private client = new Mistral({ apiKey: this.apiKey });
   private uploadedPdf: any;
-  public questions: McqQuestion[] = []; // Updated type
+  public questions: McqQuestion[] = []; 
   public invalid: boolean = true;
   public loading: boolean = false;
   constructor(private courseData: CourseData) { }
+
 
   @Input() id: string = '';
   @Input() color: string = '';
 
   ngOnInit() {    
-    console.log("Initialized with course ID:", this.id); // Debugging statement}
+    if (this.apiKey === '') {
+      alert('Please set your Mistral API key in the environment file, for help on this refer to the documentation.');
+    }
   }
 
   onFileChange(event: any) {
@@ -60,16 +64,10 @@ export class PdfParserComponent  implements OnInit {
       this.uploadedPdf = response;
       console.log('Uploaded PDF:', this.uploadedPdf);
       this.invalid = false; // Enable the button
-    } catch (error) {
+        } catch (error) {
       console.error('Error uploading file:', error);
-      // Show a more user-friendly error message
-      if (error instanceof Error && 'status' in error && (error as any).status === 401) {
-        // Display authentication error message
-        alert('Authentication failed. Please check your API key.');
-      } else {
-        // Display general error message
-        alert('Failed to upload the file. Please try again later.');
-      }
+      // Show a user-friendly error message
+      alert('File upload failed. This may be due to an invalid API key or an unsupported file format. Please verify your API key and ensure the file is a valid PDF. Note: If you are using a free trial API key, it may have expired. Please check its expiration date and try again.');
       this.invalid = true;
     } finally {
       this.loading = false; // Hide loading indicator

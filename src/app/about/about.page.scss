@@ -1,0 +1,90 @@
+.page-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+  padding-right: 15px;
+}
+
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  padding-top: 16px;
+}
+
+.content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.content p {
+  line-height: 1.6;
+}
+
+section {
+  margin-bottom: 40px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f8f8f8;
+}
+
+ion-item.active {
+  --background: var(--ion-color-primary-tint);
+  --color: var(--ion-color-primary-contrast);
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 0;
+  border-bottom: 2px solid var(--ion-color-primary);
+  padding-bottom: 8px;
+}
+
+h3 {
+  color: var(--ion-color-primary);
+  margin-bottom: 10px;
+}
+
+section:target {
+  animation: highlight 1s ease-out;
+}
+
+@keyframes highlight {
+  0% { background-color: rgba(var(--ion-color-primary-rgb), 0.2); }
+  100% { background-color: #f8f8f8; }
+}
+
+// Make sure sections have enough content to scroll past
+section {
+  min-height: 70vh;
+}
+
+.faq-item, .component-item, .troubleshooting-item {
+  margin-bottom: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--ion-color-light-shade);
+}
+
+pre {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-left: 3px solid var(--ion-color-primary);
+  padding: 1em;
+  overflow-x: auto;
+  border-radius: 4px;
+}
+
+code {
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+}
+
+ol, ul {
+  padding-left: 20px;
+}
