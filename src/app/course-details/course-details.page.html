@@ -8,19 +8,39 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-card *ngIf="course" style="margin: 20px;">
-    <ion-card-header id="header-content" (mouseenter)="showButton = true" (mouseleave)="showButton =false">
-      <ion-button id="edit-image" [class.show]="showButton" [style.--background]="course.color"><ion-icon name="create"></ion-icon></ion-button>
-      <ion-button id="credit-image" [class.show]="showButton" [style.--background]="course.color"><ion-icon name="help-circle-outline"></ion-icon></ion-button>
+  <ion-card *ngIf="course" style="margin: 20px">
+    <ion-card-header
+      id="header-content"
+      (mouseenter)="showButton = true"
+      (mouseleave)="showButton =false"
+    >
+      <ion-button
+        id="edit-image"
+        [class.show]="showButton"
+        [style.--background]="course.color"
+        ><ion-icon name="create"></ion-icon
+      ></ion-button>
+      <ion-button
+        id="credit-image"
+        [class.show]="showButton"
+        [style.--background]="course.color"
+        ><ion-icon name="help-circle-outline"></ion-icon
+      ></ion-button>
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none" *ngIf="course?.description">
-        <ion-card-title [style.color]="course.color" style="font-weight: bold;">{{ course.name }}</ion-card-title>
+        <ion-card-title [style.color]="course.color" style="font-weight: bold"
+          >{{ course.name }}</ion-card-title
+        >
       </ion-item>
       <ion-item lines="none" *ngIf="course?.description">
         <ion-label>{{ course.description }}</ion-label>
       </ion-item>
-      <app-pdf-parser *ngIf="courseId && courseColor" [id]="courseId" [color]="courseColor"></app-pdf-parser>
+      <app-pdf-parser
+        *ngIf="courseId && courseColor"
+        [id]="courseId"
+        [color]="courseColor"
+      ></app-pdf-parser>
     </ion-card-content>
   </ion-card>
 
@@ -34,10 +54,11 @@
         </ion-card-header>
         <ion-card-content>
           <ion-list>
-            <ion-item 
-              *ngFor="let questionSet of course?.questionSets; let i = index" 
+            <ion-item
+              *ngFor="let questionSet of course?.questionSets; let i = index"
               [class.selected]="selectedQuestionSet?.id === questionSet.id"
-              (click)="viewQuestions(questionSet)">
+              (click)="viewQuestions(questionSet)"
+            >
               <ion-label>{{ questionSet.name }}</ion-label>
               <ion-badge slot="end" [style.--background]="course?.color">
                 {{ questionSet.questions.length }} Q
@@ -47,26 +68,38 @@
         </ion-card-content>
       </ion-card>
     </div>
-    
+
     <!-- Right side - Questions -->
     <div class="questions-panel">
       <ion-card *ngIf="selectedQuestionSet" class="question-set-card">
         <ion-card-header>
           <ion-card-title>{{ selectedQuestionSet.name }}</ion-card-title>
-          <ion-card-subtitle>{{ selectedQuestionSet.questions.length }} questions</ion-card-subtitle>
+          <ion-card-subtitle
+            >{{ selectedQuestionSet.questions.length }}
+            questions</ion-card-subtitle
+          >
         </ion-card-header>
         <ion-card-content>
           <ion-accordion-group>
-            <ion-accordion *ngFor="let question of selectedQuestionSet.questions; let i = index">
+            <ion-accordion
+              *ngFor="let question of selectedQuestionSet.questions; let i = index"
+            >
               <ion-item slot="header">
-                <ion-label class="ion-text-wrap">{{ question.question }}</ion-label>
+                <ion-label class="ion-text-wrap"
+                  >{{ question.question }}</ion-label
+                >
               </ion-item>
               <div slot="content" class="question-content">
                 <strong>Correct Answer: {{ question.correctAnswer }}</strong>
               </div>
             </ion-accordion>
           </ion-accordion-group>
-          <ion-button [style.--background]="course?.color"  expand="full" (click)="takeTest(selectedQuestionSet)">Take Test</ion-button>
+          <ion-button
+            [style.--background]="course?.color"
+            expand="full"
+            (click)="takeTest(selectedQuestionSet)"
+            >Take Test</ion-button
+          >
         </ion-card-content>
       </ion-card>
     </div>

@@ -1,11 +1,11 @@
 .sidebar {
-    width: 200px;
-    padding-right: 15px;
-  }
+  width: 200px;
+  padding-right: 15px;
+}
 
 .split-view {
   display: flex;
-  height: calc(100% - 160px); 
+  height: calc(100% - 160px);
   padding: 0 16px;
   margin-top: 16px;
 }
@@ -45,7 +45,7 @@ ion-item.selected {
     flex-direction: column;
     height: auto;
   }
-  
+
   .sets-panel {
     width: 100%;
     margin-right: 0;
@@ -64,7 +64,9 @@ ion-item.selected {
   right: 10px;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 #edit-image.show {
@@ -78,7 +80,9 @@ ion-item.selected {
   right: 60px;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 #credit-image.show {

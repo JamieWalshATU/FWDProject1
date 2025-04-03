@@ -10,9 +10,10 @@
         <ion-item routerLink="/course-create">Create Course</ion-item>
         <ion-item routerLink="/about">About Page</ion-item>
         <ng-container *ngFor="let course of courses">
-          <ion-item 
-            [style.color]="course.color" 
-            [routerLink]="'/course-details/' + course.id">
+          <ion-item
+            [style.color]="course.color"
+            [routerLink]="'/course-details/' + course.id"
+          >
             {{ course.name }}
           </ion-item>
         </ng-container>

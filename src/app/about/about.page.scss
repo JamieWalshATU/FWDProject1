@@ -54,8 +54,12 @@ section:target {
 }
 
 @keyframes highlight {
-  0% { background-color: rgba(var(--ion-color-primary-rgb), 0.2); }
-  100% { background-color: #f8f8f8; }
+  0% {
+    background-color: rgba(var(--ion-color-primary-rgb), 0.2);
+  }
+  100% {
+    background-color: #f8f8f8;
+  }
 }
 
 // Make sure sections have enough content to scroll past
@@ -63,7 +67,9 @@ section {
   min-height: 70vh;
 }
 
-.faq-item, .component-item, .troubleshooting-item {
+.faq-item,
+.component-item,
+.troubleshooting-item {
   margin-bottom: 20px;
   padding: 10px 0;
   border-bottom: 1px solid var(--ion-color-light-shade);
@@ -85,6 +91,7 @@ code {
   font-family: monospace;
 }
 
-ol, ul {
+ol,
+ul {
   padding-left: 20px;
 }

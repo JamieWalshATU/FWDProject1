@@ -9,8 +9,8 @@ describe('PdfParserComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PdfParserComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [PdfParserComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PdfParserComponent);

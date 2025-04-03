@@ -23,14 +23,18 @@
         </ion-card-header>
         <ion-card-content>
           <ion-item>
-            <input [(ngModel)]="courseName" placeholder="Enter course name">
+            <input [(ngModel)]="courseName" placeholder="Enter course name" />
           </ion-item>
-          
+
           <ion-item>
-            <input [(ngModel)]="courseColor" type="color">
+            <input [(ngModel)]="courseColor" type="color" />
           </ion-item>
-          
-          <ion-button expand="full" (click)="generateCourse()" class="create-button">
+
+          <ion-button
+            expand="full"
+            (click)="generateCourse()"
+            class="create-button"
+          >
             <ion-icon name="add-circle-outline" slot="start"></ion-icon>
             Create Course
           </ion-button>
@@ -47,18 +51,27 @@
         <ion-card-content>
           <ion-list lines="full">
             <ion-item *ngFor="let course of courses">
-              <ion-label [style.color]="course.color">{{ course.name }}</ion-label>
-              <ion-button slot="end" color="danger" (click)="deleteCourse(course.id)">
+              <ion-label [style.color]="course.color"
+                >{{ course.name }}</ion-label
+              >
+              <ion-button
+                slot="end"
+                color="danger"
+                (click)="deleteCourse(course.id)"
+              >
                 Delete
               </ion-button>
-              <ion-button 
-              [style.--background]="course.color" 
-              [routerLink]="'/course-details/' + course.id">
-              VIEW
+              <ion-button
+                [style.--background]="course.color"
+                [routerLink]="'/course-details/' + course.id"
+              >
+                VIEW
               </ion-button>
-            </ion-item>    
+            </ion-item>
             <ion-item *ngIf="courses.length === 0">
-              <ion-label color="medium">No courses available. Create one!</ion-label>
+              <ion-label color="medium"
+                >No courses available. Create one!</ion-label
+              >
             </ion-item>
           </ion-list>
         </ion-card-content>

@@ -2,19 +2,56 @@ import { routes } from './../app.routes';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonSelectOption, IonSelect, IonList, IonRadioGroup, IonRadio, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonListHeader, IonButton, IonNote } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonItem,
+  IonLabel,
+  IonSelectOption,
+  IonSelect,
+  IonList,
+  IonRadioGroup,
+  IonRadio,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonListHeader,
+  IonButton,
+  IonNote,
+} from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { CourseData } from '../course-data.service';
 import { Course, QuestionSet } from '../course.model';
 import { DashboardDataService } from '../dashboard-data.service';
-
 
 @Component({
   selector: 'app-mcqtest',
   templateUrl: './mcqtest.page.html',
   styleUrls: ['./mcqtest.page.scss'],
   standalone: true,
-  imports: [IonButton, IonRadioGroup, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonSelectOption, IonSelect, IonList, IonRadio, IonCard, IonCardHeader , IonCardTitle, IonCardContent, IonListHeader, IonNote],
+  imports: [
+    IonButton,
+    IonRadioGroup,
+    IonLabel,
+    IonItem,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
+    IonList,
+    IonRadio,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonListHeader,
+    IonNote,
+  ],
 })
 export class MCQTestPage implements OnInit {
   course: Course | undefined;
@@ -30,11 +67,11 @@ export class MCQTestPage implements OnInit {
   totalQuestions: number = 0;
   submitted: boolean = false;
 
-  constructor(    
+  constructor(
     private route: ActivatedRoute,
     private courseData: CourseData,
     private dashboardDataService: DashboardDataService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -44,13 +81,19 @@ export class MCQTestPage implements OnInit {
         this.courseData.getCourseById(this.courseId).then((course) => {
           this.course = course;
           if (this.course && this.selectedQuestionSetId) {
-            this.selectedQuestionSet = this.course.questionSets.find(
-              (set) => set.id === this.selectedQuestionSetId
-            ) ?? null;
-            this.courseColor = this.courseId ? this.courseData.getCourseColor(this.courseId) : null;
-            console.log("Color: " + this.courseColor);
+            this.selectedQuestionSet =
+              this.course.questionSets.find(
+                (set) => set.id === this.selectedQuestionSetId,
+              ) ?? null;
+            this.courseColor = this.courseId
+              ? this.courseData.getCourseColor(this.courseId)
+              : null;
+            console.log('Color: ' + this.courseColor);
             if (this.courseColor) {
-              document.documentElement.style.setProperty('--course-color', this.courseColor);
+              document.documentElement.style.setProperty(
+                '--course-color',
+                this.courseColor,
+              );
             }
             // Generate shuffled answers for each question
             if (this.selectedQuestionSet) {
@@ -65,7 +108,10 @@ export class MCQTestPage implements OnInit {
     });
   }
 
-  shuffleAnswers(question: { correctAnswer: string; wrongAnswers: string[] }): string[] {
+  shuffleAnswers(question: {
+    correctAnswer: string;
+    wrongAnswers: string[];
+  }): string[] {
     // Combine correctAnswer and wrongAnswers into a single array
     const allAnswers = [question.correctAnswer, ...question.wrongAnswers];
 
@@ -75,7 +121,7 @@ export class MCQTestPage implements OnInit {
       var temp = allAnswers[i];
       allAnswers[i] = allAnswers[j];
       allAnswers[j] = temp;
-  }
+    }
     return allAnswers;
   }
 
@@ -115,7 +161,8 @@ export class MCQTestPage implements OnInit {
     // Update the recent course and question set in the dashboard data service
     // This will be used to display the most recent score in the dashboard
     if (this.course && this.selectedQuestionSet) {
-      this.dashboardDataService.updateRecents(this.course, this.selectedQuestionSet, this.score,)
+      this.dashboardDataService
+        .updateRecents(this.course, this.selectedQuestionSet, this.score)
         .then(() => {
           console.log('Recent data updated successfully.');
         })
@@ -126,18 +173,22 @@ export class MCQTestPage implements OnInit {
 
     // Save the updated course with the new score
     if (this.course && this.courseId) {
-      this.courseData.updateCourse(this.course as Course)
+      this.courseData
+        .updateCourse(this.course as Course)
         .then(() => {
           console.log('Score saved successfully');
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error saving score:', error);
         });
     }
 
     console.log('Submitted Answers:', this.userAnswers);
     console.log(`Score: ${this.score}/${this.totalQuestions}`);
-    console.log('All scores for this set:', this.selectedQuestionSet.totalScores);
+    console.log(
+      'All scores for this set:',
+      this.selectedQuestionSet.totalScores,
+    );
   }
 
   // Reset the test to allow retaking
@@ -154,7 +205,7 @@ export class MCQTestPage implements OnInit {
     }
   }
 
-  return(){
+  return() {
     window.history.back();
   }
 }

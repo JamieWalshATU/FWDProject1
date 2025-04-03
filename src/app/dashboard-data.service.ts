@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Course, McqQuestion, QuestionSet } from './course.model';
 import { Storage } from '@ionic/storage-angular';
 
-
 // Saves all Dashboard data in a single object
 // This is to avoid multiple storage calls and to keep the code clean
 export interface DashboardData {
@@ -11,7 +10,7 @@ export interface DashboardData {
   recentQuestionSet: QuestionSet | null;
   recentScore: number | null;
   recentCourseId: string | null; // Needed for routing to the recent test set
-  recentQuestionSetId: string | null; // Needed for routing to the recent test set 
+  recentQuestionSetId: string | null; // Needed for routing to the recent test set
 }
 
 @Injectable({
@@ -28,7 +27,7 @@ export class DashboardDataService {
 
   constructor(
     private courseData: CourseData,
-    private storage: Storage
+    private storage: Storage,
   ) {
     this.initStorage().then(() => {
       console.log('Dashboard storage initialized:', this.dashboardData);
@@ -52,7 +51,11 @@ export class DashboardDataService {
     }
   }
 
-  async updateRecents(course: Course, questionSet: QuestionSet, score: number,): Promise<void> {
+  async updateRecents(
+    course: Course,
+    questionSet: QuestionSet,
+    score: number,
+  ): Promise<void> {
     this.dashboardData.recentCourse = course;
     this.dashboardData.recentQuestionSet = questionSet;
     this.dashboardData.recentScore = score;

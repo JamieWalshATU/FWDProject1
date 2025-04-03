@@ -14,20 +14,28 @@
       <div class="sticky-nav">
         <ion-list>
           <ion-item
-            *ngFor="let section of sections" 
+            *ngFor="let section of sections"
             [class.active]="activeSection === section.id"
-            button (click)="scrollToSection(section.id)">
+            button
+            (click)="scrollToSection(section.id)"
+          >
             {{ section.title }}
           </ion-item>
         </ion-list>
       </div>
     </div>
-    
+
     <!-- Page content -->
     <div class="content">
       <section id="intro" #intro>
         <h2>Introduction</h2>
-        <p>Welcome to the Help section of our application. This project, built with Ionic and Angular, is a dynamic MCQ Generator leveraging Mistral AI's OCR capabilities. Navigate through the sections to learn about the app's features, API setup, and components. For more details, refer to the documentation and guides provided.</p>
+        <p>
+          Welcome to the Help section of our application. This project, built
+          with Ionic and Angular, is a dynamic MCQ Generator leveraging Mistral
+          AI's OCR capabilities. Navigate through the sections to learn about
+          the app's features, API setup, and components. For more details, refer
+          to the documentation and guides provided.
+        </p>
         <p>This application allows you to:</p>
         <ul>
           <li>Create courses with custom names and colors</li>
@@ -42,37 +50,87 @@
         <h2>FAQ</h2>
         <div class="faq-item">
           <h3>What is Mistral?</h3>
-          <p>Mistral is a platform that provides tools and APIs which are utilized in this project to streamline the development and deployment of AI solutions.</p>
+          <p>
+            Mistral is a platform that provides tools and APIs which are
+            utilized in this project to streamline the development and
+            deployment of AI solutions.
+          </p>
         </div>
         <div class="faq-item">
           <h3>What is an OCR?</h3>
-          <p>OCR (Optical Character Recognition) is an AI-powered system used in this project to extract and process text from images or scanned documents with high accuracy. While OCR systems are highly effective, they may occasionally make errors and might require manual verification for critical use cases.</p>
+          <p>
+            OCR (Optical Character Recognition) is an AI-powered system used in
+            this project to extract and process text from images or scanned
+            documents with high accuracy. While OCR systems are highly
+            effective, they may occasionally make errors and might require
+            manual verification for critical use cases.
+          </p>
         </div>
         <div class="faq-item">
           <h3>Data Protection and Privacy</h3>
-          <p>For more information on data protection and privacy related to Mistral's services, visit their official documentation: <a href="https://help.mistral.ai/en/collections/280418-legal-security-and-data-privacy" target="_blank" rel="noopener noreferrer">Legal, Security, and Data Privacy</a>.</p>
+          <p>
+            For more information on data protection and privacy related to
+            Mistral's services, visit their official documentation:
+            <a
+              href="https://help.mistral.ai/en/collections/280418-legal-security-and-data-privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Legal, Security, and Data Privacy</a
+            >.
+          </p>
         </div>
         <div class="faq-item">
           <h3>Where is my data stored?</h3>
-          <p>All your courses, questions, and other data are stored locally in your browser using Ionic Storage. No data is saved on remote servers unless you explicitly share it.</p>
+          <p>
+            All your courses, questions, and other data are stored locally in
+            your browser using Ionic Storage. No data is saved on remote servers
+            unless you explicitly share it.
+          </p>
         </div>
         <div class="faq-item">
           <h3>What happens if I clear my browser data?</h3>
-          <p>Clearing your browser data or local storage will result in losing all your saved courses and generated questions. Consider exporting important data if you plan to clear your browser cache.</p>
+          <p>
+            Clearing your browser data or local storage will result in losing
+            all your saved courses and generated questions. Consider exporting
+            important data if you plan to clear your browser cache.
+          </p>
         </div>
       </section>
 
       <section id="apiSetup" #apiSetup>
         <h2>API Setup</h2>
-        <i>Mistral has a comprehensive setup guide below that provides step-by-step instructions to help you get started quickly and efficiently.</i>
+        <i
+          >Mistral has a comprehensive setup guide below that provides
+          step-by-step instructions to help you get started quickly and
+          efficiently.</i
+        >
 
         <p>To get started with the API, follow these steps:</p>
         <ol>
-          <li>Visit the <a href="https://docs.mistral.ai/getting-started/quickstart/" target="_blank" rel="noopener noreferrer">Mistral AI Setup Guide</a> and create an account if you don't already have one.</li>
-          <li>Log in to your account and navigate to the API Keys section in your dashboard.</li>
+          <li>
+            Visit the
+            <a
+              href="https://docs.mistral.ai/getting-started/quickstart/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Mistral AI Setup Guide</a
+            >
+            and create an account if you don't already have one.
+          </li>
+          <li>
+            Log in to your account and navigate to the API Keys section in your
+            dashboard.
+          </li>
           <li>Generate a new API key and copy it to your clipboard.</li>
-          <li>Locate the <code>environments</code> folder in your project directory.</li>
-          <li>Create or update the <code>environment.ts</code> file (for development) or <code>environment.prod.ts</code> file (for production) with the following content:</li>
+          <li>
+            Locate the <code>environments</code> folder in your project
+            directory.
+          </li>
+          <li>
+            Create or update the <code>environment.ts</code> file (for
+            development) or <code>environment.prod.ts</code> file (for
+            production) with the following content:
+          </li>
         </ol>
 
         <pre>
@@ -84,15 +142,22 @@
           </code>
         </pre>
 
-        <p>Replace <code>YOUR_API_KEY_HERE</code> with the API key you copied earlier.</p>
-        
+        <p>
+          Replace <code>YOUR_API_KEY_HERE</code> with the API key you copied
+          earlier.
+        </p>
+
         <h3>Offline Development</h3>
-        <p>If you want to test the application without an API key, you'll need to modify the PDF parser component to use mock data instead of making real API calls.</p>
+        <p>
+          If you want to test the application without an API key, you'll need to
+          modify the PDF parser component to use mock data instead of making
+          real API calls.
+        </p>
       </section>
 
       <section id="usage" #usage>
         <h2>Usage Guide</h2>
-        
+
         <h3>Creating a Course</h3>
         <ol>
           <li>Open the side menu and select "Create Course"</li>
@@ -100,17 +165,19 @@
           <li>Select a color for the course</li>
           <li>Click the "Create Course" button</li>
         </ol>
-        
+
         <h3>Uploading a PDF</h3>
         <ol>
           <li>Select a course from the side menu</li>
-          <li>In the course details page, you'll find the PDF parser component</li>
+          <li>
+            In the course details page, you'll find the PDF parser component
+          </li>
           <li>Click "Choose File" to select a PDF document</li>
           <li>Wait for the PDF to be processed (this may take a moment)</li>
           <li>Review the generated questions</li>
           <li>Click "Save Questions" to add them to the course</li>
         </ol>
-        
+
         <h3>Viewing Question Sets</h3>
         <ol>
           <li>Select a course from the side menu</li>
@@ -121,20 +188,33 @@
 
       <section id="troubleshooting" #troubleshooting>
         <h2>Troubleshooting</h2>
-        
+
         <div class="troubleshooting-item">
           <h3>API Authentication Errors</h3>
-          <p>If you see "401 Unauthorized" errors when trying to upload PDFs, check that your Mistral API key is correctly set in the environment files.</p>
+          <p>
+            If you see "401 Unauthorized" errors when trying to upload PDFs,
+            check that your Mistral API key is correctly set in the environment
+            files.
+          </p>
         </div>
-        
+
         <div class="troubleshooting-item">
           <h3>PDF Parsing Issues</h3>
-          <p>Some PDFs may not parse correctly due to formatting, encryption, or other issues. Try using a different PDF or ensure your PDF is properly formatted and not password protected.</p>
+          <p>
+            Some PDFs may not parse correctly due to formatting, encryption, or
+            other issues. Try using a different PDF or ensure your PDF is
+            properly formatted and not password protected.
+          </p>
         </div>
-        
+
         <div class="troubleshooting-item">
           <h3>Application Performance</h3>
-          <p>If the application is running slowly, try closing other browser tabs or applications that may be consuming system resources. Additionally, ensure your device meets the minimum system requirements for running the application.</p>
+          <p>
+            If the application is running slowly, try closing other browser tabs
+            or applications that may be consuming system resources.
+            Additionally, ensure your device meets the minimum system
+            requirements for running the application.
+          </p>
         </div>
       </section>
     </div>

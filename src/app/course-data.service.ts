@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Course, QuestionSet } from './course.model'; 
+import { Course, QuestionSet } from './course.model';
 import { Storage } from '@ionic/storage-angular';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseData {
-  
   public courses: Course[] = [];
 
-  constructor(private storage: Storage) { 
+  constructor(private storage: Storage) {
     this.initStorage();
   }
   async initStorage() {
@@ -33,13 +32,13 @@ export class CourseData {
   }
 
   getCourseColor(id: string): string | null {
-    const course = this.courses.find(course => course.id === id);
+    const course = this.courses.find((course) => course.id === id);
     return course ? course.color : null;
   }
 
   async getCourseById(id: string): Promise<Course | undefined> {
-    const courseData = this.courses.find(course => course.id === id);
-    
+    const courseData = this.courses.find((course) => course.id === id);
+
     if (courseData) {
       // Convert plain object to Course instance
       const course = new Course(courseData.name, courseData.color);
@@ -49,17 +48,19 @@ export class CourseData {
       course.imageUrl = courseData.imageUrl || '';
       return course;
     }
-    
+
     return undefined;
   }
 
   async updateCourse(updatedCourse: Course): Promise<Course> {
-    const index = this.courses.findIndex(course => course.id === updatedCourse.id);
+    const index = this.courses.findIndex(
+      (course) => course.id === updatedCourse.id,
+    );
     if (index !== -1) {
       this.courses[index] = updatedCourse;
       console.log('Updated course:', updatedCourse);
-      await this.saveToStorage(); 
-      return updatedCourse; 
+      await this.saveToStorage();
+      return updatedCourse;
     }
     throw new Error('Course not found');
   }
@@ -69,7 +70,7 @@ export class CourseData {
   }
 
   deleteCourseById(id: string): void {
-    const courseIndex = this.courses.findIndex(course => course.id === id);
+    const courseIndex = this.courses.findIndex((course) => course.id === id);
     if (courseIndex !== -1) {
       this.courses.splice(courseIndex, 1); // Remove the course from the array
       this.saveToStorage(); // Persist the changes

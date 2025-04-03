@@ -1,9 +1,12 @@
 .sidenav {
-    width: 200px;
-    padding-right: 15px;
-  }
+  width: 200px;
+  padding-right: 15px;
+}
 
-  html,body { height:100%; }
+html,
+body {
+  height: 100%;
+}
 
 // Container layout
 .page-container {
@@ -13,7 +16,7 @@
   height: 100%;
   padding: 16px;
   gap: 16px;
-  
+
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -22,11 +25,11 @@
 // Left sidebar
 .sidebar-container {
   width: 300px;
-  
+
   @media (max-width: 768px) {
     width: 100%;
   }
-  
+
   ion-card {
     height: 100%;
     margin: 0;
@@ -35,7 +38,6 @@
 
 // Right content area
 .content-container {
-  
   ion-card {
     height: 100%;
     margin: 0;

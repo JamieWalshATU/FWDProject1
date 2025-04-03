@@ -22,7 +22,7 @@ export class Course {
   description: string = '';
   questionSets: QuestionSet[] = []; // Store multiple sets of questions
   questions: any;
-  imageUrl : string;
+  imageUrl: string;
 
   constructor(name: string, color: string) {
     this.name = name;
