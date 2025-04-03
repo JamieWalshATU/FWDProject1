@@ -5,12 +5,14 @@ import { Storage } from '@ionic/storage-angular';
 
 // Saves all Dashboard data in a single object
 // This is to avoid multiple storage calls and to keep the code clean
+
+// Data structure for dashboard data
 export interface DashboardData {
   recentCourse: Course | null;
   recentQuestionSet: QuestionSet | null;
   recentScore: number | null;
-  recentCourseId: string | null; // Needed for routing to the recent test set
-  recentQuestionSetId: string | null; // Needed for routing to the recent test set
+  recentCourseId: string | null; 
+  recentQuestionSetId: string | null; 
 }
 
 @Injectable({
@@ -29,6 +31,7 @@ export class DashboardDataService {
     private courseData: CourseData,
     private storage: Storage,
   ) {
+    // Creates a separate instance of the storage for the dashboard data
     this.initStorage().then(() => {
       console.log('Dashboard storage initialized:', this.dashboardData);
     });
@@ -42,7 +45,7 @@ export class DashboardDataService {
   ngOnInit() {
     const courses = this.courseData.getCourseDetails();
   }
-
+  // Creates a separate instance of the storage for the dashboard data
   async initStorage(): Promise<void> {
     await this.storage.create();
     const storedDashboardData = await this.storage.get('dashboardData');
@@ -59,13 +62,12 @@ export class DashboardDataService {
     this.dashboardData.recentCourse = course;
     this.dashboardData.recentQuestionSet = questionSet;
     this.dashboardData.recentScore = score;
-    this.dashboardData.recentCourseId = course.id; // Store the course ID for routing
-    this.dashboardData.recentQuestionSetId = questionSet.id; // Store the question set ID for routing
+    this.dashboardData.recentCourseId = course.id; 
+    this.dashboardData.recentQuestionSetId = questionSet.id; 
 
-    // Save the updated dashboard data to storage
+    // Convert the dashboard data to a JSON string and save it to storage
     await this.storage.set('dashboardData', JSON.stringify(this.dashboardData));
 
-    console.log('Dashboard data updated:', this.dashboardData);
   }
 
   getDashboardData(): DashboardData {
@@ -74,15 +76,14 @@ export class DashboardDataService {
   getRecentCourse(): Course | null {
     return this.dashboardData.recentCourse;
   }
-
   getRecentQuestionSet(): QuestionSet | null {
     return this.dashboardData.recentQuestionSet;
   }
-
   getRecentScore(): number | null {
     return this.dashboardData.recentScore;
   }
 
+  // Clears the recent course, question set, and score from the dashboard data
   async clearRecents(): Promise<void> {
     this.dashboardData = {
       recentCourse: null,

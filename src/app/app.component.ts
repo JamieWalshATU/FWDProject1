@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import {
-  IonButtons,
   IonContent,
   IonHeader,
   IonMenu,
-  IonMenuButton,
   IonTitle,
   IonToolbar,
   IonApp,
@@ -20,7 +18,7 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  standalone: true, // added standalone flag
+  standalone: true, 
   imports: [
     IonItem,
     IonRouterOutlet,
@@ -40,19 +38,21 @@ export class AppComponent {
   courses: Course[] = [];
 
   ngOnInit() {
+    
+    // Initializes storage and populates the courses array with the data from the service
     this.courseData
       .initStorage()
       .then(() => {
         this.courses = this.courseData.getCourseDetails();
-        console.log(this.courses);
       })
       .catch((error) => {
         console.error('Error initializing storage:', error);
+        // **Add logic if promise fails**
       });
   }
 
   deleteCourse(id: string): void {
-    this.courseData.deleteCourseById(id); // Call the service method
-    this.courses = this.courseData.getCourseDetails(); // Refresh the course list
+    this.courseData.deleteCourseById(id); 
+    this.courses = this.courseData.getCourseDetails(); 
   }
 }

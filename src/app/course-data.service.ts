@@ -10,6 +10,8 @@ export class CourseData {
   constructor(private storage: Storage) {
     this.initStorage();
   }
+  //Retrieves JSON data from storage and parses it into a Course object. This allows saving and loading all data in a single function call.
+
   async initStorage() {
     await this.storage.create();
     const storedCourses = await this.storage.get('courses');
@@ -26,21 +28,20 @@ export class CourseData {
     return this.courses;
   }
 
-  getSetById(id: string): QuestionSet | undefined {
-    const course = this.courses.find((course) => course.id === id);
-    return course?.questionSets.find((set) => set.id === id);
+  getSetById(courseId: string, setId: string): QuestionSet | undefined {
+    const course = this.courses.find((course) => course.id === courseId);
+    return course?.questionSets.find((set) => set.id === setId);
   }
 
   getCourseColor(id: string): string | null {
     const course = this.courses.find((course) => course.id === id);
     return course ? course.color : null;
   }
-
+// Creates a reference to the course object in the storage, and parses the data into a Course object. 
   async getCourseById(id: string): Promise<Course | undefined> {
     const courseData = this.courses.find((course) => course.id === id);
 
     if (courseData) {
-      // Convert plain object to Course instance
       const course = new Course(courseData.name, courseData.color);
       course.id = courseData.id;
       course.description = courseData.description || '';
@@ -64,7 +65,7 @@ export class CourseData {
     }
     throw new Error('Course not found');
   }
-
+  // Saves the courses array to storage in JSON format. 
   async saveToStorage() {
     await this.storage.set('courses', JSON.stringify(this.courses));
   }
@@ -72,9 +73,9 @@ export class CourseData {
   deleteCourseById(id: string): void {
     const courseIndex = this.courses.findIndex((course) => course.id === id);
     if (courseIndex !== -1) {
-      this.courses.splice(courseIndex, 1); // Remove the course from the array
-      this.saveToStorage(); // Persist the changes
-      console.log(`Course with ID ${id} deleted.`);
+      this.courses.splice(courseIndex, 1);
+      this.saveToStorage(); 
+
     } else {
       console.error(`Course with ID ${id} not found.`);
     }

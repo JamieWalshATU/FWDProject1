@@ -44,12 +44,12 @@ export class DashboardComponent implements OnInit {
   recentQuestionSet: QuestionSet | null = null;
   recentScore: number | null = null;
   recentScorePercentage: string | null = null;
-
-  recentCourseId: string | null = null; // Needed for routing to the recent test set
-  recentQuestionSetId: string | null = null; // Needed for routing to the recent test set
+  recentCourseId: string | null = null; 
+  recentQuestionSetId: string | null = null; 
   courseColor: string | null = null;
 
-  scorePercentageAnimated: number = 0;
+  // This variable is used to animate the score percentage
+  scorePercentageAnimated: number = 0; 
 
   constructor(private dashboardDataService: DashboardDataService) {}
 
@@ -65,31 +65,39 @@ export class DashboardComponent implements OnInit {
           this.courseColor,
         );
       }
-
-      console.log('Color after loading: ' + this.courseColor);
     });
-
+    // Set up an interval to update the score percentage every second, used to animate the spinner and score on start-up,
     setInterval(() => {
       if (this.recentScorePercentage) {
         this.scorePercentageAnimated = parseFloat(this.recentScorePercentage);
       }
-    }, 1000); // Update every second
+    }, 1000);
   }
 
   async loadRecentData(): Promise<void> {
-    await this.dashboardDataService.initStorage(); // Ensure storage is initialized
-    this.recentCourse = this.dashboardDataService.getRecentCourse();
-    this.recentQuestionSet = this.dashboardDataService.getRecentQuestionSet();
-    this.recentScore = this.dashboardDataService.getRecentScore();
-    this.recentScorePercentage =
-      this.recentScore !== null
-        ? (
-            (this.recentScore /
-              (this.recentQuestionSet?.questions.length || 1)) *
-            100
-          ).toFixed(2)
-        : null;
-    this.recentCourseId = this.recentCourse?.id || null;
-    this.recentQuestionSetId = this.recentQuestionSet?.id || null;
+    try {
+      // Initialize storage to ensure data is available
+      await this.dashboardDataService.initStorage(); 
+      
+      // Retrieve recent activity data
+      this.recentCourse = this.dashboardDataService.getRecentCourse();
+      this.recentQuestionSet = this.dashboardDataService.getRecentQuestionSet();
+      this.recentScore = this.dashboardDataService.getRecentScore();
+      
+      // Calculate percentage score if a score exists
+      if (this.recentScore !== null) {
+        // Use question count or fallback to 1 to avoid division by zero
+        const totalQuestions = this.recentQuestionSet?.questions.length || 1;
+        const percentage = (this.recentScore / totalQuestions) * 100;
+        this.recentScorePercentage = percentage.toFixed(2);
+      } else {
+        this.recentScorePercentage = null;
+      }
+      
+      this.recentCourseId = this.recentCourse?.id || null;
+      this.recentQuestionSetId = this.recentQuestionSet?.id || null;
+    } catch (error) {
+      console.error('Failed to load recent activity data:', error);
+    }
   }
 }

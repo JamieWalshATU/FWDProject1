@@ -11,7 +11,6 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonMenu,
   IonButtons,
   IonMenuButton,
   IonCard,
@@ -23,7 +22,6 @@ import {
 import { CourseData } from '../course-data.service';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from '../dashboard/dashboard.component';
-import { routes } from '../app.routes';
 
 @Component({
   selector: 'app-course-create',
@@ -79,23 +77,24 @@ export class CourseCreatePage implements OnInit {
     if (
       this.courseData
         .getCourseDetails()
+        // Checks if the course exists in the Array by comparing the name,
         .some((course: { name: string }) => course.name === this.courseName)
     ) {
       alert('Course already exists!');
       return;
     }
-
+    // Creates a new course with the verified data
     this.courseData.createCourse(this.courseName, this.courseColor).then(() => {
-      // Refresh the courses list after creating a new course
+
+      //Refresh the course list after creation and resets the form
       this.loadCourses();
-      // Clear the form
       this.courseName = '';
       this.courseColor = '';
     });
   }
 
   deleteCourse(id: string): void {
-    this.courseData.deleteCourseById(id); // Call the service method
-    this.loadCourses(); // Refresh the course list
+    this.courseData.deleteCourseById(id); 
+    this.loadCourses(); 
   }
 }

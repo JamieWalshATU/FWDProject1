@@ -34,21 +34,26 @@ export class PdfParserComponent implements OnInit {
       );
     }
     if (this.color) {
-      document.documentElement.style.setProperty('--course-color', this.color);
+      // Set the color for the course
+      // This is a workaround to set the CSS variable for the course color
+      document.documentElement.style.setProperty('--course-color', this.color); 
     }
   }
 
   onFileChange(event: any) {
+    // Check if the file input has a file
     const file = event.target.files[0];
     if (file) {
       // Disable button while parsing PDF
       this.invalid = true;
       this.parsePdf(file);
-      console.log('File change detected, course ID:', this.id); // Debugging statement
     }
   }
 
+  // Uploads the PDF file to Mistral and parses it
   async parsePdf(file: File) {
+    
+    // API Usage Guidelines
     const formData = new FormData();
     formData.append('file', file);
     formData.append('purpose', 'ocr');
@@ -60,6 +65,7 @@ export class PdfParserComponent implements OnInit {
       const response = await this.client.files.upload({
         file: {
           fileName: file.name,
+          // Convert the file to an ArrayBuffer, necessary for the Mistral API to process the file
           content: await file.arrayBuffer(),
         },
         purpose: 'ocr',
@@ -92,6 +98,7 @@ export class PdfParserComponent implements OnInit {
       });
       this.loading = true; // Set loading to true when starting the request
       const chatResponse = await this.client.chat.complete({
+        // JSON object containing the model and messages, has to be in the format specified by the Mistral API,
         model: 'mistral-small-latest',
         messages: [
           {
@@ -99,6 +106,7 @@ export class PdfParserComponent implements OnInit {
             content: [
               {
                 type: 'text',
+                // Outlines the response we can expect from the API, lineBreaks are used to separate the questions and answers so the data can be parsed to same way into our services everytime without any issues.
                 text: 'Can you generate 10 MCQ based questions on this document? Please format each question exactly as follows:\n\nQ: [question text]\nA: [correct answer text]\nW1: [wrong answer 1 text]\nW2: [wrong answer 2 text]\nW3: [wrong answer 3 text]',
               },
               {
@@ -128,48 +136,48 @@ export class PdfParserComponent implements OnInit {
   parseQuestions(responseContent: string): McqQuestion[] {
     // Updated return type
     const questions: McqQuestion[] = [];
+    // Split the response content into lines
     const lines = responseContent.split('\n');
     let currentQuestion: McqQuestion | null = null;
 
+    // Loop through each line and parse the question, correct answer, and wrong answers
     lines.forEach((line) => {
-      //console.log("Processing line:", line); // Debugging statement
+      
+      // If the line starts with 'Q:', it indicates a new question, 
       if (line.startsWith('Q:')) {
         if (currentQuestion) {
           questions.push(currentQuestion);
-          //console.log("Added question:", currentQuestion); // Debugging statement
         }
+        // Extract the question text and create a new question object, subtracting 2 to remove the 'Q:' prefix
         const questionText = line.substring(2).trim();
         currentQuestion = {
           question: questionText,
           correctAnswer: '',
           wrongAnswers: [],
         };
-        //console.log("New question:", currentQuestion); // Debugging statement
+      // If the line starts with 'A:', it indicates the correct answer, subtracting 2 to remove the 'A:' prefix
       } else if (line.startsWith('A:')) {
         if (currentQuestion) {
           const answerText = line.substring(2).trim();
           currentQuestion.correctAnswer = answerText;
-          //console.log("Added correct answer:", currentQuestion.correctAnswer); // Debugging statement
         }
+        // If the line starts with 'W1:', 'W2:', or 'W3:', it indicates a wrong answer and is processed accordingly
       } else if (
         line.startsWith('W1:') ||
         line.startsWith('W2:') ||
         line.startsWith('W3:')
       ) {
         if (currentQuestion) {
+          // Extract the wrong answer text, subtracts 1 past the index of the colon, so "W1: Apple" becomes "Apple"
           const wrongAnswerText = line.substring(line.indexOf(':') + 1).trim();
           currentQuestion.wrongAnswers.push(wrongAnswerText);
-          //console.log("Added wrong answer:", wrongAnswerText); // Debugging statement
         }
       }
     });
 
     if (currentQuestion) {
       questions.push(currentQuestion);
-      //console.log("Added final question:", currentQuestion); // Debugging statement
     }
-
-    //console.log("Final questions array:", questions); // Debugging statement
     return questions;
   }
 
@@ -182,18 +190,17 @@ export class PdfParserComponent implements OnInit {
     }
 
     try {
-      console.log('Course ID:', this.id); // Debugging statement
+      // Gets course by ID, and adds the questions to the course
       const course = await this.courseData.getCourseById(this.id);
       if (!course) {
         console.error('Course not found.');
         return;
       }
-
       const questionSetName = `Question Set ${course.questionSets.length + 1}`;
       course.addQuestionSet(questionSetName, this.questions);
 
       await this.courseData.updateCourse(course);
-      console.log('Updated course with questions:', course);
+      // Clears the questions array,
       this.questions = [];
     } catch (error) {
       console.error('Error updating course with questions:', error);

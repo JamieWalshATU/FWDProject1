@@ -61,7 +61,16 @@ export class MCQTestPage implements OnInit {
   selectedQuestionSetId: string | null = null;
   selectedQuestionSet: QuestionSet | null = null;
 
-  // Track user answers by question index
+/* 
+Track user answers by question index using a computed property signature. 
+I initially used an array (userAnswers[0], userAnswers[1], etc.), but ran into issues when the number of questions changed dynamically.
+The array approach caused problems with non-sequential indices, so I switched to using a computed property signature. 
+This allows me to dynamically store answers by question index, making it more flexible and easier to handle changing question sets. 
+
+Helpful resources: 
+https://stackoverflow.com/questions/74266527/typescript-how-to-initialize-object-with-dynamic-keys-using-index-signature?
+https://dmitripavlutin.com/typescript-index-signatures/
+*/
   userAnswers: { [questionIndex: number]: string } = {};
   score: number = 0;
   totalQuestions: number = 0;
@@ -74,36 +83,45 @@ export class MCQTestPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
+    // Returns courseId and questionSetId from the URL parameters
     this.route.paramMap.subscribe((params) => {
       this.selectedQuestionSetId = params.get('questionSetId');
       this.courseId = params.get('courseId');
+      
+      // If courseId is present, fetch the course data
       if (this.courseId) {
-        this.courseData.getCourseById(this.courseId).then((course) => {
-          this.course = course;
-          if (this.course && this.selectedQuestionSetId) {
-            this.selectedQuestionSet =
-              this.course.questionSets.find(
-                (set) => set.id === this.selectedQuestionSetId,
-              ) ?? null;
-            this.courseColor = this.courseId
-              ? this.courseData.getCourseColor(this.courseId)
-              : null;
-            console.log('Color: ' + this.courseColor);
-            if (this.courseColor) {
-              document.documentElement.style.setProperty(
-                '--course-color',
-                this.courseColor,
-              );
+        this.courseData.getCourseById(this.courseId) 
+          .then((course) => {
+            this.course = course; 
+
+            if (this.course && this.selectedQuestionSetId) {
+
+              this.selectedQuestionSet = this.course.questionSets.find(
+                (set) => set.id === this.selectedQuestionSetId
+              ) ?? null; 
+
+              this.courseColor = this.courseId
+                ? this.courseData.getCourseColor(this.courseId)
+                : null; 
+              // Set the course color as a CSS variable, used where course color couldn't be implemented consistently
+              // ** This is a workaround to set the course color in the CSS variable, and is to be changed where possible **
+              if (this.courseColor) {
+                document.documentElement.style.setProperty(
+                  '--course-color', 
+                  this.courseColor  
+                );
+              }
+              
+              // If the selected question set is found, shuffle the answers
+              if (this.selectedQuestionSet) {
+                this.totalQuestions = this.selectedQuestionSet.questions.length;
+                this.selectedQuestionSet.questions.forEach((question) => {
+                  question.shuffledAnswers = this.shuffleAnswers(question); 
+                });
+              }
             }
-            // Generate shuffled answers for each question
-            if (this.selectedQuestionSet) {
-              this.totalQuestions = this.selectedQuestionSet.questions.length;
-              this.selectedQuestionSet.questions.forEach((question) => {
-                question.shuffledAnswers = this.shuffleAnswers(question);
-              });
-            }
-          }
-        });
+          });
       }
     });
   }
@@ -139,8 +157,7 @@ export class MCQTestPage implements OnInit {
     }
 
     this.score = 0;
-
-    // Compare user answers with correct answers
+    // Calculate the score based on correct answers
     this.selectedQuestionSet.questions.forEach((question, index) => {
       const userAnswer = this.userAnswers[index];
       if (userAnswer === question.correctAnswer) {
@@ -155,11 +172,10 @@ export class MCQTestPage implements OnInit {
       this.selectedQuestionSet.totalScores = [];
     }
 
-    // Add the current score to the totalScores array
     this.selectedQuestionSet.totalScores.push(this.score);
 
     // Update the recent course and question set in the dashboard data service
-    // This will be used to display the most recent score in the dashboard
+    // This will be used to display the most recent score in the dashboard on startup
     if (this.course && this.selectedQuestionSet) {
       this.dashboardDataService
         .updateRecents(this.course, this.selectedQuestionSet, this.score)

@@ -26,8 +26,10 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonMenuButton } from '@ionic/angular/standalone';
 import { Course, QuestionSet } from '../course.model';
 import { PdfParserComponent } from '../pdf-parser/pdf-parser.component';
+
+// Imports Icons from ionicons individually, explained in comment below
 import { create, helpCircleOutline } from 'ionicons/icons';
-import { addIcons } from 'ionicons';
+import { addIcons } from 'ionicons'; // 
 
 @Component({
   selector: 'app-course-details',
@@ -67,20 +69,23 @@ export class CourseDetailsPage implements OnInit {
   selectedQuestionSet: QuestionSet | null = null;
   courseImage: string | null = null;
 
+  // Used to show or hide Edit Picture button & Author credits button on hover
   showButton = false;
 
   constructor(
     private route: ActivatedRoute,
     private courseData: CourseData,
   ) {
+    // Adds ionic Icons, Im unsure if this is the best case way to do this, however I couldn't not find another way to do this which seemed to work as intended
     addIcons({ create, helpCircleOutline });
   }
 
   ngOnInit(): void {
-    // Get the route parameter
+    // Get the route parameters from the URL
     this.route.paramMap.subscribe((params) => {
-      // Reset selected question set when route changes
       this.selectedQuestionSet = null;
+
+
 
       this.courseId = params.get('id');
       if (this.courseId) {
@@ -88,7 +93,8 @@ export class CourseDetailsPage implements OnInit {
         this.courseData
           .getCourseById(this.courseId)
           .then((course: Course | undefined) => {
-            this.course = course;
+            this.course = course; 
+            // Set the course color and image URL if the course is found
             if (this.course && this.course.color) {
               this.courseColor = this.course.color;
               this.courseImage = this.course.imageUrl;
@@ -98,6 +104,7 @@ export class CourseDetailsPage implements OnInit {
               window.history.back();
             }
           })
+          // If the course is not found, navigate back
           .catch((error: Error) => {
             console.error('Error fetching course:', error);
             window.history.back();
@@ -107,35 +114,30 @@ export class CourseDetailsPage implements OnInit {
   }
 
   viewQuestions(questionSet: QuestionSet): void {
-    this.selectedQuestionSet = questionSet; // Set the selected question set
+    this.selectedQuestionSet = questionSet; 
   }
 
   deleteCourse(): void {
     if (this.courseId) {
-      this.courseData.deleteCourseById(this.courseId); // Call the service method
-      window.history.back(); // Navigate back after deletion
+      this.courseData.deleteCourseById(this.courseId); 
+      // Navigate back to the previous page after deletion
+      window.history.back(); 
     }
   }
+
   takeTest(questionSet: QuestionSet): void {
     if (this.courseId) {
+    
       this.courseData.updateCourse(this.course as Course).then(() => {
         window.location.href = `/mcqtest/${this.courseId}/${questionSet.id}`;
       });
     }
   }
-
+  // Sets the image URL in the CSS variable for the course image
   setImageUrl(imageUrl: string): void {
     document.documentElement.style.setProperty(
       '--imageURL',
       `url(${imageUrl})`,
     );
-
-    const headerContent = document.getElementById('header-content');
-    if (headerContent) {
-      headerContent.style.setProperty(
-        '--background',
-        `url(${imageUrl}) no-repeat center/cover`,
-      );
-    }
   }
 }
