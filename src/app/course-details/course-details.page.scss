@@ -53,10 +53,35 @@ ion-item.selected {
   }
 }
 
-/* Spinner container styling */
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle:hover,
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic:hover {
-    stroke: var(--CourseColor) !important;
+#header-content {
+  --background: var(--imageURL) no-repeat center/cover;
+  height: 150px;
+}
+
+#edit-image {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#edit-image.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#credit-image {
+  position: absolute;
+  bottom: 10px;
+  right: 60px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#credit-image.show {
+  opacity: 1;
+  transform: translateY(0);
 }

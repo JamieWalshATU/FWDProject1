@@ -46,6 +46,7 @@ export class CourseData {
       course.id = courseData.id;
       course.description = courseData.description || '';
       course.questionSets = courseData.questionSets || [];
+      course.imageUrl = courseData.imageUrl || '';
       return course;
     }
     

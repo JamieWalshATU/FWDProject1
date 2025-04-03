@@ -9,14 +9,17 @@
 
 <ion-content [fullscreen]="true">
   <ion-card *ngIf="course" style="margin: 20px;">
-    <ion-card-header>
-      <ion-card-title [style.color]="course.color">{{ course.name }}</ion-card-title>
+    <ion-card-header id="header-content" (mouseenter)="showButton = true" (mouseleave)="showButton =false">
+      <ion-button id="edit-image" [class.show]="showButton" [style.--background]="course.color"><ion-icon name="create"></ion-icon></ion-button>
+      <ion-button id="credit-image" [class.show]="showButton" [style.--background]="course.color"><ion-icon name="help-circle-outline"></ion-icon></ion-button>
     </ion-card-header>
     <ion-card-content>
       <ion-item lines="none" *ngIf="course?.description">
-        <ion-label>Course Description: {{ course.description }}</ion-label>
+        <ion-card-title [style.color]="course.color" style="font-weight: bold;">{{ course.name }}</ion-card-title>
       </ion-item>
-      
+      <ion-item lines="none" *ngIf="course?.description">
+        <ion-label>{{ course.description }}</ion-label>
+      </ion-item>
       <app-pdf-parser *ngIf="courseId && courseColor" [id]="courseId" [color]="courseColor"></app-pdf-parser>
     </ion-card-content>
   </ion-card>
