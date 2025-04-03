@@ -1,0 +1,20 @@
+<div class="dashboard-content">
+
+  <!-- Recent Question Set -->
+  <ion-card *ngIf="recentQuestionSet">
+    <ion-card-header>
+      <ion-card-title>Recent Question Set Results</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Course:</strong> {{ recentCourse?.name }}</p>
+      <p><strong>Set:</strong> {{ recentQuestionSet.name }}</p>
+      <mat-progress-spinner mode= "determinate" value=" {{ scorePercentageAnimated }}"></mat-progress-spinner>
+      <p><strong>Score:</strong> {{ recentScore }}</p>
+    </ion-card-content>
+  </ion-card>
+
+
+  <!-- No Data Message -->
+  <div *ngIf="!recentCourse && !recentQuestionSet && recentScore === null" class="no-data">
+  </div>
+</div>

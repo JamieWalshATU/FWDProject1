@@ -2,10 +2,11 @@ import { routes } from './../app.routes';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonSelectOption, IonSelect, IonList, IonRadioGroup, IonRadio, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonListHeader, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonSelectOption, IonSelect, IonList, IonRadioGroup, IonRadio, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonListHeader, IonButton, IonNote } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { CourseData } from '../course-data.service';
 import { Course, QuestionSet } from '../course.model';
+import { DashboardDataService } from '../dashboard-data.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Course, QuestionSet } from '../course.model';
   templateUrl: './mcqtest.page.html',
   styleUrls: ['./mcqtest.page.scss'],
   standalone: true,
-  imports: [IonButton, IonRadioGroup, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonSelectOption, IonSelect, IonList, IonRadio, IonCard, IonCardHeader , IonCardTitle, IonCardContent, IonListHeader],
+  imports: [IonButton, IonRadioGroup, IonLabel, IonItem, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonSelectOption, IonSelect, IonList, IonRadio, IonCard, IonCardHeader , IonCardTitle, IonCardContent, IonListHeader, IonNote],
 })
 export class MCQTestPage implements OnInit {
   course: Course | undefined;
@@ -32,6 +33,7 @@ export class MCQTestPage implements OnInit {
   constructor(    
     private route: ActivatedRoute,
     private courseData: CourseData,
+    private dashboardDataService: DashboardDataService,
   ) { }
 
   ngOnInit(): void {
@@ -98,8 +100,40 @@ export class MCQTestPage implements OnInit {
 
     this.submitted = true;
 
+    // Initialize totalScores if it doesn't exist
+    if (!this.selectedQuestionSet.totalScores) {
+      this.selectedQuestionSet.totalScores = [];
+    }
+
+    // Add the current score to the totalScores array
+    this.selectedQuestionSet.totalScores.push(this.score);
+
+    // Update the recent course and question set in the dashboard data service
+    // This will be used to display the most recent score in the dashboard
+    if (this.course && this.selectedQuestionSet) {
+      this.dashboardDataService.updateRecents(this.course, this.selectedQuestionSet, this.score)
+        .then(() => {
+          console.log('Recent data updated successfully.');
+        })
+        .catch((error) => {
+          console.error('Error updating recent data:', error);
+        });
+    }
+
+    // Save the updated course with the new score
+    if (this.course && this.courseId) {
+      this.courseData.updateCourse(this.course as Course)
+        .then(() => {
+          console.log('Score saved successfully');
+        })
+        .catch(error => {
+          console.error('Error saving score:', error);
+        });
+    }
+
     console.log('Submitted Answers:', this.userAnswers);
     console.log(`Score: ${this.score}/${this.totalQuestions}`);
+    console.log('All scores for this set:', this.selectedQuestionSet.totalScores);
   }
 
   // Reset the test to allow retaking
@@ -114,5 +148,9 @@ export class MCQTestPage implements OnInit {
         question.shuffledAnswers = this.shuffleAnswers(question);
       });
     }
+  }
+
+  return(){
+    window.history.back();
   }
 }

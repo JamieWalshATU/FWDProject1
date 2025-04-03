@@ -52,3 +52,11 @@ ion-item.selected {
     margin-bottom: 16px;
   }
 }
+
+/* Spinner container styling */
+:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
+:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,
+:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle:hover,
+:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic:hover {
+    stroke: var(--CourseColor) !important;
+}

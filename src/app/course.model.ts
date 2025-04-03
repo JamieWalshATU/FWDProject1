@@ -11,7 +11,9 @@ export interface QuestionSet {
   name: string;
   id: string;
   questions: McqQuestion[];
+  totalScores: number[]; // Store the total scores for the set
 } // Define the structure of a set of questions
+
 export class Course {
   name: string;
   id: string;
@@ -33,6 +35,7 @@ export class Course {
       name,
       id: uuidv4(),
       questions,
+      totalScores: [], // Initialize with an empty array
     };
     this.questionSets.push(newSet);
   }

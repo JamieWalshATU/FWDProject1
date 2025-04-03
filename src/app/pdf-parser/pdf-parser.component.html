@@ -6,7 +6,8 @@
   <div *ngIf="!loading">
     <button [disabled]="invalid" (click)="getChatResponse()">Get Chat Response</button>
     <span class="spinner-container">
-      <mat-spinner *ngIf="loading" [diameter]="30" [color]="color"></mat-spinner>
+      <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+      <mat-progress-spinner mode="indeterminate" color='color' stroke="color"></mat-progress-spinner>
     </span>
   </div>
 </div>

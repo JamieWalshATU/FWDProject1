@@ -27,7 +27,8 @@ export class PdfParserComponent  implements OnInit {
 
   @Input() id: string = '';
   @Input() color: string = '';
-
+  
+  
   ngOnInit() {    
     if (this.apiKey === '') {
       alert('Please set your Mistral API key in the environment file, for help on this refer to the documentation.');

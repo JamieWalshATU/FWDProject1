@@ -3,31 +3,77 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>courseCreate</ion-title>
+    <ion-title>Create Course</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" id="main-content">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">courseCreate</ion-title>
+      <ion-title size="large">Create Course</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div class="sidebar" style="position: absolute; left: 0; width: 270px; padding: 16px; background-color: darkgray; min-height: 100%;">
-    <ion-item>
-      <input [(ngModel)]="courseName" placeholder="Enter course name">
-    </ion-item>
-    <ion-item>
-      <input [(ngModel)]="courseColor" type="color">
-    </ion-item>
-    <ion-button expand="full" (click)="generateCourse()">Create Course</ion-button>
-  </div>
+  <div class="page-container">
+    <!-- Left sidebar for course creation -->
+    <div class="sidebar-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>New Course</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+            <input [(ngModel)]="courseName" placeholder="Enter course name">
+          </ion-item>
+          
+          <ion-item>
+            <input [(ngModel)]="courseColor" type="color">
+          </ion-item>
+          
+          <ion-button expand="full" (click)="generateCourse()" class="create-button">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Create Course
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
 
-  <ion-list style="margin-left: 300px;">
-    <ion-item *ngFor="let course of courses">
-      <ion-label [style.color]="course.color">{{ course.name }}</ion-label>
-      <ion-button slot="end" (click)="deleteCourse(course.id)">Delete</ion-button>
-    </ion-item>
-  </ion-list>
+    <!-- Middle for Course List -->
+    <div class="content-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Your Courses</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list lines="full">
+            <ion-item *ngFor="let course of courses">
+              <ion-label [style.color]="course.color">{{ course.name }}</ion-label>
+              <ion-button slot="end" color="danger" (click)="deleteCourse(course.id)">
+                <ion-icon name="trash-outline"></ion-icon>
+                Delete
+              </ion-button>
+            </ion-item>
+            
+            <ion-item *ngIf="courses.length === 0">
+              <ion-label color="medium">No courses available. Create one!</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Dashboard with Flex Layout -->
+    <div class="dashboard-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Dashboard</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="dashboard-flex">
+            <app-dashboard></app-dashboard>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
 </ion-content>

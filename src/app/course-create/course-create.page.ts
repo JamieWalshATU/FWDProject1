@@ -2,16 +2,17 @@ import { Course } from './../course.model';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonList, IonMenu, IonButtons, IonMenuButton} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonItem, IonLabel, IonList, IonMenu, IonButtons, IonMenuButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonIcon} from '@ionic/angular/standalone';
 import { CourseData } from '../course-data.service';
 import { RouterModule } from '@angular/router';
+import { DashboardComponent } from "../dashboard/dashboard.component";
 
 @Component({
   selector: 'app-course-create',
   templateUrl: './course-create.page.html',
   styleUrls: ['./course-create.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonItem, IonButtons, IonMenuButton, RouterModule, IonList, IonLabel],
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonButton, IonItem, IonButtons, IonMenuButton, RouterModule, IonList, IonLabel, IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonIcon, DashboardComponent],
 })
 export class CourseCreatePage implements OnInit {
   constructor(public courseData: CourseData) {}

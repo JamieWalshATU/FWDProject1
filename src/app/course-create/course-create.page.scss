@@ -4,3 +4,78 @@
   }
 
   html,body { height:100%; }
+
+// Container layout
+.page-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  gap: 16px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+// Left sidebar
+.sidebar-container {
+  width: 300px;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  
+  ion-card {
+    height: 100%;
+    margin: 0;
+  }
+}
+
+// Right content area
+.content-container {
+  flex: 1;
+  
+  ion-card {
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+  }
+}
+
+.dashboard-container {
+  flex: 1;
+
+  ion-card {
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+  }
+
+  .dashboard-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+}
+
+// Form styling
+ion-item {
+  --padding-start: 0;
+  margin-bottom: 8px;
+}
+
+.create-button {
+  margin-top: 16px;
+}
+
+// Empty state
+ion-item:last-child {
+  text-align: center;
+}

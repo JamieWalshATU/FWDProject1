@@ -16,6 +16,15 @@
         <p>Percentage: {{ (score / totalQuestions) * 100 | number:'1.0-0' }}%</p>
         <ion-button expand="block" (click)="retakeTest()">Retake Test</ion-button>
       </ion-card-content>
+      <ion-card-content>
+        <h3>Correct Answers:</h3>
+        <ion-list>
+          <ion-item *ngFor="let question of selectedQuestionSet?.questions; let i = index">
+            <ion-label>{{ question.question }}</ion-label>
+            <ion-note slot="end" color="success">{{ question.correctAnswer }}</ion-note>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
     </ion-card>
   </div>
 
@@ -56,3 +65,4 @@
     </div>
   </div>
 </ion-content>
+<ion-button expand="block" (click)="return()">Return to Course</ion-button>

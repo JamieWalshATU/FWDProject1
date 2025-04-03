@@ -1,9 +1,20 @@
+.dashboard-content {
+  padding: 16px;
+}
+
+ion-card {
+  margin-bottom: 16px;
+}
+
+.no-data {
+  text-align: center;
+  color: var(--ion-color-medium);
+  font-size: 16px;
+}
 /* Spinner container styling */
 :host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
 :host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,
 :host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle:hover,
 :host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic:hover {
-    stroke: var(--color) !important;
+    stroke: var(--courseColor) !important;
 }
-
-.mat-mdc-progress-spinner { --mdc-circular-progress-active-indicator-color: var(--color); }

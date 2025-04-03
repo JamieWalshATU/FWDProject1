@@ -72,6 +72,4 @@ export class CourseData {
       console.error(`Course with ID ${id} not found.`);
     }
   }
-
-
 }
