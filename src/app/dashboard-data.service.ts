@@ -10,6 +10,8 @@ export interface DashboardData {
   recentCourse: Course | null;
   recentQuestionSet: QuestionSet | null;
   recentScore: number | null;
+  recentCourseId: string | null; // Needed for routing to the recent test set
+  recentQuestionSetId: string | null; // Needed for routing to the recent test set 
 }
 
 @Injectable({
@@ -20,6 +22,8 @@ export class DashboardDataService {
     recentCourse: null,
     recentQuestionSet: null,
     recentScore: null,
+    recentCourseId: null,
+    recentQuestionSetId: null,
   };
 
   constructor(
@@ -48,10 +52,12 @@ export class DashboardDataService {
     }
   }
 
-  async updateRecents(course: Course, questionSet: QuestionSet, score: number): Promise<void> {
+  async updateRecents(course: Course, questionSet: QuestionSet, score: number,): Promise<void> {
     this.dashboardData.recentCourse = course;
     this.dashboardData.recentQuestionSet = questionSet;
     this.dashboardData.recentScore = score;
+    this.dashboardData.recentCourseId = course.id; // Store the course ID for routing
+    this.dashboardData.recentQuestionSetId = questionSet.id; // Store the question set ID for routing
 
     // Save the updated dashboard data to storage
     await this.storage.set('dashboardData', JSON.stringify(this.dashboardData));
@@ -79,6 +85,8 @@ export class DashboardDataService {
       recentCourse: null,
       recentQuestionSet: null,
       recentScore: null,
+      recentCourseId: null,
+      recentQuestionSetId: null,
     };
 
     // Clear the dashboard data from storage

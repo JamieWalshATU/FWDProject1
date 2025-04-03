@@ -47,7 +47,11 @@ export class MCQTestPage implements OnInit {
             this.selectedQuestionSet = this.course.questionSets.find(
               (set) => set.id === this.selectedQuestionSetId
             ) ?? null;
-
+            this.courseColor = this.courseId ? this.courseData.getCourseColor(this.courseId) : null;
+            console.log("Color: " + this.courseColor);
+            if (this.courseColor) {
+              document.documentElement.style.setProperty('--course-color', this.courseColor);
+            }
             // Generate shuffled answers for each question
             if (this.selectedQuestionSet) {
               this.totalQuestions = this.selectedQuestionSet.questions.length;
@@ -111,7 +115,7 @@ export class MCQTestPage implements OnInit {
     // Update the recent course and question set in the dashboard data service
     // This will be used to display the most recent score in the dashboard
     if (this.course && this.selectedQuestionSet) {
-      this.dashboardDataService.updateRecents(this.course, this.selectedQuestionSet, this.score)
+      this.dashboardDataService.updateRecents(this.course, this.selectedQuestionSet, this.score,)
         .then(() => {
           console.log('Recent data updated successfully.');
         })

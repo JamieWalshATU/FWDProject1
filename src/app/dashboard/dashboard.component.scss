@@ -18,3 +18,14 @@ ion-card {
 :host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic:hover {
     stroke: var(--courseColor) !important;
 }
+
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle:hover,
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic:hover {
+    stroke: var(--spinner-color, #3880ff) !important;
+}
+
+:host {
+    --spinner-color: var(--course-color);
+}

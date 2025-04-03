@@ -33,6 +33,9 @@ export class PdfParserComponent  implements OnInit {
     if (this.apiKey === '') {
       alert('Please set your Mistral API key in the environment file, for help on this refer to the documentation.');
     }
+    if (this.color) {
+      document.documentElement.style.setProperty('--course-color', this.color);
+    }
   }
 
   onFileChange(event: any) {

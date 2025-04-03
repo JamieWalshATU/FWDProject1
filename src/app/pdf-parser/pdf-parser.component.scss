@@ -1,9 +1,11 @@
 /* Spinner container styling */
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle:hover,
-:host >>> .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic:hover {
-    stroke: var(--color) !important;
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic,
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle:hover,
+::ng-deep .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic:hover {
+    stroke: var(--spinner-color, #3880ff) !important;
 }
 
-.mat-mdc-progress-spinner { --mdc-circular-progress-active-indicator-color: var(--color); }
+:host {
+    --spinner-color: var(--course-color);
+}

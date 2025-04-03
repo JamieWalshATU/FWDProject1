@@ -32,6 +32,11 @@ export class CourseData {
     return course?.questionSets.find((set) => set.id === id);
   }
 
+  getCourseColor(id: string): string | null {
+    const course = this.courses.find(course => course.id === id);
+    return course ? course.color : null;
+  }
+
   async getCourseById(id: string): Promise<Course | undefined> {
     const courseData = this.courses.find(course => course.id === id);
     

@@ -49,11 +49,14 @@
             <ion-item *ngFor="let course of courses">
               <ion-label [style.color]="course.color">{{ course.name }}</ion-label>
               <ion-button slot="end" color="danger" (click)="deleteCourse(course.id)">
-                <ion-icon name="trash-outline"></ion-icon>
                 Delete
               </ion-button>
-            </ion-item>
-            
+              <ion-button 
+              [style.--background]="course.color" 
+              [routerLink]="'/course-details/' + course.id">
+              VIEW
+              </ion-button>
+            </ion-item>    
             <ion-item *ngIf="courses.length === 0">
               <ion-label color="medium">No courses available. Create one!</ion-label>
             </ion-item>

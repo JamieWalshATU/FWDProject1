@@ -12,6 +12,7 @@
 ion-radio-group {
   width: 100%; /* Ensure the radio group takes up the full width */
   display: block;
+  --ion-color-primary: var(--course-color); /* Set the primary color for the radio buttons */
 }
 
 ion-item {
@@ -49,4 +50,11 @@ ion-radio-group ion-list-header {
 
 .submit-button {
   margin: 20px 16px;
+}
+
+ion-content {
+  --ion-color-primary: var(--course-color)/* Default primary color */
+}
+ion-button {
+  --background: var(--course-color); /* Set the background color to course color */
 }

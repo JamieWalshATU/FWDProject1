@@ -63,7 +63,7 @@
               </div>
             </ion-accordion>
           </ion-accordion-group>
-          <ion-button expand="full" (click)="takeTest(selectedQuestionSet)">Take Test</ion-button>
+          <ion-button [style.--background]="course?.color"  expand="full" (click)="takeTest(selectedQuestionSet)">Take Test</ion-button>
         </ion-card-content>
       </ion-card>
     </div>

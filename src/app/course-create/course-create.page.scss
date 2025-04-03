@@ -35,12 +35,12 @@
 
 // Right content area
 .content-container {
-  flex: 1;
   
   ion-card {
     height: 100%;
     margin: 0;
     overflow: auto;
+    width: 500px;
   }
 }
 
