@@ -20,7 +20,6 @@ import {
   styleUrls: ['./about.page.scss'],
   standalone: true,
   imports: [
-    IonAccordionGroup,
     IonItem,
     IonList,
     IonContent,
@@ -36,7 +35,7 @@ import {
 export class AboutPage implements OnInit, AfterViewInit {
   @ViewChild(IonContent) content!: IonContent;
 
-  // Define the sections for the obeserver
+  // Define the sections for the observer
   sections = [
     { id: 'intro', title: 'Introduction' },
     { id: 'faq', title: 'FAQ' },

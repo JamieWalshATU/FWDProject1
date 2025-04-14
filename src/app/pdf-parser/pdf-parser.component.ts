@@ -106,7 +106,7 @@ export class PdfParserComponent implements OnInit {
             content: [
               {
                 type: 'text',
-                // Outlines the response we can expect from the API, lineBreaks are used to separate the questions and answers so the data can be parsed to same way into our services everytime without any issues.
+                // Outlines the response we can expect from the API, lineBreaks are used to separate the questions and answers so the data can be parsed to same way into our services every time without any issues.
                 text: 'Can you generate 10 MCQ based questions on this document? Please format each question exactly as follows:\n\nQ: [question text]\nA: [correct answer text]\nW1: [wrong answer 1 text]\nW2: [wrong answer 2 text]\nW3: [wrong answer 3 text]',
               },
               {
@@ -122,6 +122,7 @@ export class PdfParserComponent implements OnInit {
         const responseContent = chatResponse.choices[0].message
           .content as string;
         this.questions = this.parseQuestions(responseContent);
+        console.log(responseContent);
         this.addQuestionsToCourse(this.questions);
       } else {
         console.error('No choices found in chat response.');
@@ -138,6 +139,7 @@ export class PdfParserComponent implements OnInit {
     const questions: McqQuestion[] = [];
     // Split the response content into lines
     const lines = responseContent.split('\n');
+    console.log(lines);
     let currentQuestion: McqQuestion | null = null;
 
     // Loop through each line and parse the question, correct answer, and wrong answers

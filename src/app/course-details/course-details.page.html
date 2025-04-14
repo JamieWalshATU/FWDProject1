@@ -18,6 +18,7 @@
         id="edit-image"
         [class.show]="showButton"
         [style.--background]="course.color"
+        (click)="openEditImageModal()"
         ><ion-icon name="create"></ion-icon
       ></ion-button>
       <ion-button
@@ -105,3 +106,4 @@
     </div>
   </div>
 </ion-content>
+
