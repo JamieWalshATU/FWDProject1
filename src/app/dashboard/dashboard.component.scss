@@ -1,5 +1,9 @@
 .dashboard-content {
-  padding: 16px;
+  background-image: var(--imageURL);
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 5px;
+  border-radius: 10px;
 }
 
 ion-card {
@@ -41,3 +45,4 @@ ion-card {
 :host {
   --spinner-color: var(--course-color);
 }
+

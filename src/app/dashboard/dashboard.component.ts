@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit {
   recentCourseId: string | null = null; 
   recentQuestionSetId: string | null = null; 
   courseColor: string | null = null;
+  recentImageUrl: string | null = null; 
 
   // This variable is used to animate the score percentage
   scorePercentageAnimated: number = 0; 
@@ -63,6 +64,12 @@ export class DashboardComponent implements OnInit {
         document.documentElement.style.setProperty(
           '--course-color',
           this.courseColor,
+        );
+      }
+      if (this.recentImageUrl) {
+        document.documentElement.style.setProperty(
+          '--imageURL',
+          `url(${this.recentImageUrl})`
         );
       }
     });
@@ -96,6 +103,7 @@ export class DashboardComponent implements OnInit {
       
       this.recentCourseId = this.recentCourse?.id || null;
       this.recentQuestionSetId = this.recentQuestionSet?.id || null;
+      this.recentImageUrl = this.recentCourse?.imageUrl || null;
     } catch (error) {
       console.error('Failed to load recent activity data:', error);
     }

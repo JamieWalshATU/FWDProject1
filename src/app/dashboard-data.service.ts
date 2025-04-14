@@ -13,6 +13,7 @@ export interface DashboardData {
   recentScore: number | null;
   recentCourseId: string | null; 
   recentQuestionSetId: string | null; 
+  recentImageUrl: string | null;
 }
 
 @Injectable({
@@ -25,6 +26,7 @@ export class DashboardDataService {
     recentScore: null,
     recentCourseId: null,
     recentQuestionSetId: null,
+    recentImageUrl: null,
   };
 
   constructor(
@@ -64,7 +66,7 @@ export class DashboardDataService {
     this.dashboardData.recentScore = score;
     this.dashboardData.recentCourseId = course.id; 
     this.dashboardData.recentQuestionSetId = questionSet.id; 
-
+    this.dashboardData.recentImageUrl = course.imageUrl;
     // Convert the dashboard data to a JSON string and save it to storage
     await this.storage.set('dashboardData', JSON.stringify(this.dashboardData));
 
@@ -91,6 +93,7 @@ export class DashboardDataService {
       recentScore: null,
       recentCourseId: null,
       recentQuestionSetId: null,
+      recentImageUrl: null,
     };
 
     // Clear the dashboard data from storage
