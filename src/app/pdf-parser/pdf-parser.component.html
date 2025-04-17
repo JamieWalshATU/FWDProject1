@@ -1,14 +1,40 @@
-<div>
-  <input type="file" (change)="onFileChange($event)" />
-  <div *ngIf="loading" class="spinner-container">
-    <mat-spinner></mat-spinner>
-  </div>
-  <div *ngIf="!loading">
-    <button [disabled]="invalid" (click)="getChatResponse()">
-      Get Chat Response
-    </button>
-    <span class="spinner-container">
-      <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
-    </span>
-  </div>
-</div>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Upload PDF</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <!-- Hidden file input -->
+    <input 
+      type="file" 
+      id="pdf-upload" 
+      (change)="onFileChange($event)" 
+      accept="application/pdf" 
+      style="display: none;" 
+    />
+    
+    <!-- Styled Ionic button that triggers the file input -->
+    <ion-button 
+      [style.--background]="color" 
+      (click)="openFileSelector()"
+      class="upload-btn"
+    >
+      <ion-icon name="document-outline" slot="start"></ion-icon>
+      Upload PDF
+    </ion-button>
+    
+    <!-- Spinner shown during loading -->
+    <div *ngIf="loading" class="spinner-container">
+      <mat-spinner [diameter]="30"></mat-spinner>
+    </div>
+    
+    <!-- Get Chat Response button shown after file is uploaded -->
+    <div *ngIf="!loading && !invalid" class="response-container">
+      <ion-button 
+        [style.--background]="color" 
+        (click)="getChatResponse()"
+      >
+        Generate Questions
+      </ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>

@@ -6,12 +6,32 @@ import { environment } from 'src/environments/environment';
 import { McqQuestion } from '../course.model';
 import { Mistral } from '@mistralai/mistralai';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { 
+  IonButton, 
+  IonCard, 
+  IonCardContent, 
+  IonCardHeader, 
+  IonCardTitle,
+  IonIcon
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { documentOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-pdf-parser',
   templateUrl: './pdf-parser.component.html',
   styleUrls: ['./pdf-parser.component.scss'],
-  imports: [FormsModule, CommonModule, MatProgressSpinnerModule],
+  imports: [
+    FormsModule, 
+    CommonModule, 
+    MatProgressSpinnerModule,
+    IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonIcon
+  ],
   standalone: true,
 })
 export class PdfParserComponent implements OnInit {
@@ -22,7 +42,8 @@ export class PdfParserComponent implements OnInit {
   public questions: McqQuestion[] = [];
   public invalid: boolean = true;
   public loading: boolean = false;
-  constructor(private courseData: CourseData) {}
+  constructor(private courseData: CourseData) {
+      addIcons({documentOutline});}
 
   @Input() id: string = '';
   @Input() color: string = '';
@@ -38,6 +59,9 @@ export class PdfParserComponent implements OnInit {
       // This is a workaround to set the CSS variable for the course color
       document.documentElement.style.setProperty('--course-color', this.color); 
     }
+    
+    // Initialize document icon for PDF upload
+    addIcons({ documentOutline });
   }
 
   onFileChange(event: any) {
@@ -48,6 +72,11 @@ export class PdfParserComponent implements OnInit {
       this.invalid = true;
       this.parsePdf(file);
     }
+  }
+
+  // Method to trigger file input click
+  openFileSelector() {
+    document.getElementById('pdf-upload')?.click();
   }
 
   // Uploads the PDF file to Mistral and parses it

@@ -15,3 +15,44 @@
 :host {
   --spinner-color: var(--course-color);
 }
+
+/* Card styling */
+ion-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+}
+
+ion-card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Button styling */
+.upload-btn {
+  margin: 16px 0;
+  font-weight: 500;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+/* Containers */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.response-container {
+  margin-top: 16px;
+}
+
+/* Make sure the Generate Questions button is full width */
+.response-container ion-button {
+  width: 100%;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
