@@ -1,4 +1,4 @@
-import { Course } from './../course.model';
+import { Course } from '../../../models/course.model';
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -19,9 +19,9 @@ import {
   IonCardTitle,
   IonIcon,
 } from '@ionic/angular/standalone';
-import { CourseData } from '../course-data.service';
+import { CourseData } from '../../../services/course-data.service';
 import { RouterModule } from '@angular/router';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { DashboardComponent } from '../../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-course-create',

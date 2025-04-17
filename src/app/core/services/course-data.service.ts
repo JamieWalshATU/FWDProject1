@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Course, QuestionSet } from './course.model';
+import { Course, QuestionSet } from '../models/course.model';
 import { Storage } from '@ionic/storage-angular';
 @Injectable({
   providedIn: 'root',

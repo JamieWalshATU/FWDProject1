@@ -16,6 +16,9 @@ ion-card {
   font-size: 16px;
 }
 /* Spinner container styling */
+// This is from an article here: 
+//https://stackoverflow.com/questions/48786027/angular-material-mat-spinner-custom-color
+// Angular Material Spinner has 3 colour options built in, however it doesn't react to custom UI changes as it should. This is a workaround to make it work with the custom theme, the other options listed don't function as expected, this creates a warning in the console as the code is deprecated.
 :host >>> .mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle,
 :host
   >>> .mat-mdc-progress-spinner

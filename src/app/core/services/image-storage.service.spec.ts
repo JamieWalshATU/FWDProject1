@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ImageStorageService } from './image-storage.service';
+import { ImageStorageService } from './core/services/image-storage.service';
 
 describe('ImageStorageService', () => {
   let service: ImageStorageService;

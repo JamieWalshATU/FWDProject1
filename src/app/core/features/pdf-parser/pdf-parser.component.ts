@@ -1,9 +1,9 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CourseData } from './../course-data.service';
+import { CourseData } from '../../services/course-data.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { McqQuestion } from '../course.model';
+import { McqQuestion } from '../../models/course.model';
 import { Mistral } from '@mistralai/mistralai';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { 

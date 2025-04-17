@@ -1,9 +1,9 @@
-import { ImageStorageService } from './../image-storage.service';
-import { CourseData } from './../course-data.service';
+import { ImageStorageService } from '../../services/image-storage.service';
+import { CourseData } from '../../services/course-data.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonHeader, IonButton, IonContent, IonToolbar, IonButtons, IonTitle, IonIcon, IonModal, } from "@ionic/angular/standalone";
 import { ModalController, IonicModule } from '@ionic/angular';
-import { Course } from '../course.model';
+import { Course } from '../../models/course.model';
 import { CommonModule } from '@angular/common';
 import { imageOutline, close } from 'ionicons/icons';
 import { addIcons } from 'ionicons'; 

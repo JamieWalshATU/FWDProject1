@@ -1,20 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardDataService } from '../dashboard-data.service';
-import { Course, QuestionSet } from '../course.model';
+import { DashboardDataService } from '../../services/dashboard-data.service';
+import { Course, QuestionSet } from '../../models/course.model';
 import {
-  IonList,
-  IonLabel,
-  IonItem,
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
   IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonNote,
   IonButton,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';

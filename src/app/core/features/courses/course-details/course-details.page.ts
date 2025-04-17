@@ -1,5 +1,5 @@
 import { OverlayEventDetail } from '@ionic/core/components';
-import { CourseData } from './../course-data.service';
+import { CourseData } from '../../../services/course-data.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,9 +25,9 @@ import {
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { IonMenuButton, ModalController } from '@ionic/angular/standalone';
-import { Course, QuestionSet } from '../course.model';
-import { PdfParserComponent } from '../pdf-parser/pdf-parser.component';
-import { EditImageComponent } from '../edit-image/edit-image.component';
+import { Course, QuestionSet } from '../../../models/course.model';
+import { PdfParserComponent } from '../../pdf-parser/pdf-parser.component';
+import { EditImageComponent } from '../../edit-image/edit-image.component';
 
 // Imports Icons from ionicons individually, explained in comment below
 import { create, helpCircleOutline, close } from 'ionicons/icons';

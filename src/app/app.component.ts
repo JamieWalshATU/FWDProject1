@@ -10,9 +10,9 @@ import {
   IonRouterOutlet,
   IonItem,
 } from '@ionic/angular/standalone';
-import { CourseData } from './course-data.service';
+import { CourseData } from './core/services/course-data.service';
 import { CommonModule } from '@angular/common';
-import { Course } from './course.model';
+import { Course } from './core/models/course.model';
 import { RouterModule } from '@angular/router';
 
 @Component({

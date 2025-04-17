@@ -1,6 +1,6 @@
 import { CourseData } from './course-data.service';
 import { Injectable } from '@angular/core';
-import { Course, McqQuestion, QuestionSet } from './course.model';
+import { Course, McqQuestion, QuestionSet } from '../models/course.model';
 import { Storage } from '@ionic/storage-angular';
 
 // Saves all Dashboard data in a single object

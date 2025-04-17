@@ -9,14 +9,14 @@ export const routes: Routes = [
   {
     path: 'course-create',
     loadComponent: () =>
-      import('./course-create/course-create.page').then(
+      import('./core/features/courses/course-create/course-create.page').then(
         (m) => m.CourseCreatePage,
       ),
   },
   {
     path: 'course-details/:id',
     loadComponent: () =>
-      import('./course-details/course-details.page').then(
+      import('./core/features/courses/course-details/course-details.page').then(
         (m) => m.CourseDetailsPage,
       ),
   },
@@ -27,6 +27,6 @@ export const routes: Routes = [
   {
     path: 'mcqtest/:courseId/:questionSetId',
     loadComponent: () =>
-      import('./mcqtest/mcqtest.page').then((m) => m.MCQTestPage),
+      import('./core/features/mcqtest/mcqtest.page').then((m) => m.MCQTestPage),
   },
 ];

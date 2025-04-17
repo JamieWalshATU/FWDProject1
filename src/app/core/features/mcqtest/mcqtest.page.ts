@@ -1,4 +1,3 @@
-import { routes } from './../app.routes';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,8 +8,6 @@ import {
   IonToolbar,
   IonItem,
   IonLabel,
-  IonSelectOption,
-  IonSelect,
   IonList,
   IonRadioGroup,
   IonRadio,
@@ -23,9 +20,9 @@ import {
   IonNote,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
-import { CourseData } from '../course-data.service';
-import { Course, QuestionSet } from '../course.model';
-import { DashboardDataService } from '../dashboard-data.service';
+import { CourseData } from '../../services/course-data.service';
+import { Course, QuestionSet } from '../../models/course.model';
+import { DashboardDataService } from '../../services/dashboard-data.service';
 
 @Component({
   selector: 'app-mcqtest',
