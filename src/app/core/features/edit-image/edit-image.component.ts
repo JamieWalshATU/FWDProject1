@@ -3,7 +3,7 @@ import { CourseData } from '../../services/course-data.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonHeader, IonButton, IonContent, IonToolbar, IonButtons, IonTitle, IonIcon, IonModal, } from "@ionic/angular/standalone";
 import { ModalController, IonicModule } from '@ionic/angular';
-import { Course } from '../../models/course.model';
+import { Course } from '../../services/storage/models/course.model';
 import { CommonModule } from '@angular/common';
 import { imageOutline, close } from 'ionicons/icons';
 import { addIcons } from 'ionicons'; 

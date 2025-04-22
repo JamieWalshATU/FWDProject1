@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { StorageService } from '../base/storage.service';
 import { STORAGE_KEYS } from '../models/storage.model';
 import { Course, QuestionSet } from '../models/course.model';
-import { DashboardData } from '../models/dashboard.model';
+import { DashboardData } from '../../../services/dashboard-data.service';
 
 @Injectable({
     providedIn: 'root',

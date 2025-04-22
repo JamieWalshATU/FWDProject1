@@ -21,7 +21,7 @@ import {
 } from '@ionic/angular/standalone';
 import { ActivatedRoute } from '@angular/router';
 import { CourseData } from '../../services/course-data.service';
-import { Course, QuestionSet } from '../../models/course.model';
+import { Course, QuestionSet } from '../../services/storage/models/course.model';
 import { DashboardDataService } from '../../services/dashboard-data.service';
 
 @Component({
@@ -98,9 +98,19 @@ https://dmitripavlutin.com/typescript-index-signatures/
                 (set) => set.id === this.selectedQuestionSetId
               ) ?? null; 
 
-              this.courseColor = this.courseId
-                ? this.courseData.getCourseColor(this.courseId)
-                : null; 
+              if (this.courseId) {
+                this.courseData.getCourseColor(this.courseId).then((color) => {
+                  this.courseColor = color;
+                  if (this.courseColor) {
+                    document.documentElement.style.setProperty(
+                      '--course-color', 
+                      this.courseColor  
+                    );
+                  }
+                });
+              } else {
+                this.courseColor = null;
+              }
               // Set the course color as a CSS variable, used where course color couldn't be implemented consistently
               // ** This is a workaround to set the course color in the CSS variable, and is to be changed where possible **
               if (this.courseColor) {

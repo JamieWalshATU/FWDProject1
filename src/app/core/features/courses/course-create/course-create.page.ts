@@ -1,4 +1,4 @@
-import { Course } from '../../../models/course.model';
+import { Course } from '../../../services/storage/models/course.model';
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -61,40 +61,34 @@ export class CourseCreatePage implements OnInit {
   courseName: string = '';
   courseColor: string = '';
 
-  ngOnInit(): void {
-    this.loadCourses();
-  }
-  loadCourses() {
-    this.courses = this.courseData.getCourseDetails();
+  async ngOnInit(): Promise<void> {
+    await this.loadCourses();
   }
 
-  generateCourse() {
+  async loadCourses(): Promise<void> {
+    this.courses = await this.courseData.getCourseDetails();
+  }
+
+  async generateCourse(): Promise<void> {
     if (this.courseName === '' || this.courseColor === '') {
       alert('Please fill in all fields');
       return;
     }
 
-    if (
-      this.courseData
-        .getCourseDetails()
-        // Checks if the course exists in the Array by comparing the name,
-        .some((course: { name: string }) => course.name === this.courseName)
-    ) {
+    const existing = await this.courseData.getCourseDetails();
+    if (existing.some(course => course.name === this.courseName)) {
       alert('Course already exists!');
       return;
     }
     // Creates a new course with the verified data
-    this.courseData.createCourse(this.courseName, this.courseColor).then(() => {
-
-      //Refresh the course list after creation and resets the form
-      this.loadCourses();
-      this.courseName = '';
-      this.courseColor = '';
-    });
+    await this.courseData.createCourse(this.courseName, this.courseColor);
+    await this.loadCourses();
+    this.courseName = '';
+    this.courseColor = '';
   }
 
-  deleteCourse(id: string): void {
-    this.courseData.deleteCourseById(id); 
-    this.loadCourses(); 
+  async deleteCourse(id: string): Promise<void> {
+    await this.courseData.deleteCourseById(id);
+    await this.loadCourses();
   }
 }

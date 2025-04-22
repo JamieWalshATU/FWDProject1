@@ -12,7 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { CourseData } from './core/services/course-data.service';
 import { CommonModule } from '@angular/common';
-import { Course } from './core/models/course.model';
+import { Course } from './core/services/storage/models/course.model';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -37,22 +37,28 @@ export class AppComponent {
   constructor(public courseData: CourseData) {}
   courses: Course[] = [];
 
-  ngOnInit() {
-    
-    // Initializes storage and populates the courses array with the data from the service
-    this.courseData
-      .initStorage()
-      .then(() => {
-        this.courses = this.courseData.getCourseDetails();
-      })
-      .catch((error) => {
-        console.error('Error initializing storage:', error);
-        // **Add logic if promise fails**
-      });
+  async ngOnInit(): Promise<void> {
+    try {
+      // Initializes storage
+      await this.courseData.initStorage();
+      // Load sidebar courses
+      await this.loadCourses();
+      // Refresh sidebar when courses change
+      this.courseData.coursesChanged$.subscribe(() => this.loadCourses());
+    } catch (error) {
+      console.error('Error initializing storage:', error);
+    }
   }
 
-  deleteCourse(id: string): void {
-    this.courseData.deleteCourseById(id); 
-    this.courses = this.courseData.getCourseDetails(); 
+  /**
+   * Load current list of courses from storage
+   */
+  async loadCourses(): Promise<void> {
+    this.courses = await this.courseData.getCourseDetails();
+  }
+
+  async deleteCourse(id: string): Promise<void> {
+    await this.courseData.deleteCourseById(id);
+    this.courses = await this.courseData.getCourseDetails();
   }
 }

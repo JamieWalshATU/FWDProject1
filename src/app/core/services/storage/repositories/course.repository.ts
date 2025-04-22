@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { StorageService } from "../base/storage.service";
 import { STORAGE_KEYS } from "../models/storage.model";
-import { Course, QuestionSet } from "../../../models/course.model";
+import { Course, QuestionSet } from "../models/course.model";
 
 
 @Injectable({

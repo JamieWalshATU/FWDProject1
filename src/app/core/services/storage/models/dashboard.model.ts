@@ -1,4 +1,4 @@
-import { Course, QuestionSet } from './course.model';
+import { Course, QuestionSet } from '../models/course.model';
 
 /**
  * Interface representing dashboard data that is stored in local storage

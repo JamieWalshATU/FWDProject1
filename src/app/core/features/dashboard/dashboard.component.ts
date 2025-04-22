@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardDataService } from '../../services/dashboard-data.service';
-import { Course, QuestionSet } from '../../models/course.model';
+import { Course, QuestionSet } from '../../services/storage/models/course.model';
 import {
   IonCard,
   IonCardHeader,
@@ -74,13 +74,10 @@ export class DashboardComponent implements OnInit {
 
   async loadRecentData(): Promise<void> {
     try {
-      // Initialize storage to ensure data is available
-      await this.dashboardDataService.initStorage(); 
-      
       // Retrieve recent activity data
-      this.recentCourse = this.dashboardDataService.getRecentCourse();
-      this.recentQuestionSet = this.dashboardDataService.getRecentQuestionSet();
-      this.recentScore = this.dashboardDataService.getRecentScore();
+      this.recentCourse = await this.dashboardDataService.getRecentCourse();
+      this.recentQuestionSet = await this.dashboardDataService.getRecentQuestionSet();
+      this.recentScore = await this.dashboardDataService.getRecentScore();
       
       // Calculate percentage score if a score exists
       if (this.recentScore !== null) {
