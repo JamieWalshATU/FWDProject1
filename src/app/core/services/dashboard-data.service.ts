@@ -1,10 +1,7 @@
 import { CourseData } from './course-data.service';
 import { Injectable } from '@angular/core';
-import { Course, McqQuestion, QuestionSet } from '../models/course.model';
+import { Course, QuestionSet } from '../models/course.model';
 import { Storage } from '@ionic/storage-angular';
-
-// Saves all Dashboard data in a single object
-// This is to avoid multiple storage calls and to keep the code clean
 
 // Data structure for dashboard data
 export interface DashboardData {
@@ -20,6 +17,8 @@ export interface DashboardData {
   providedIn: 'root',
 })
 export class DashboardDataService {
+  private STORAGE_KEY = 'dashboardData';
+  private initialized = false;
   private dashboardData: DashboardData = {
     recentCourse: null,
     recentQuestionSet: null,
@@ -32,73 +31,112 @@ export class DashboardDataService {
   constructor(
     private courseData: CourseData,
     private storage: Storage,
-  ) {
-    // Creates a separate instance of the storage for the dashboard data
-    this.initStorage().then(() => {
-      console.log('Dashboard storage initialized:', this.dashboardData);
-    });
-  }
+  ) {}
 
-  Course: Course[] = [];
-  mcqQuestion: McqQuestion[] = [];
-  getCourses(): Course[] {
-    return this.courseData.getCourseDetails();
-  }
-  ngOnInit() {
-    const courses = this.courseData.getCourseDetails();
-  }
-  // Creates a separate instance of the storage for the dashboard data
+  /**
+   * Initialize storage and load dashboard data
+   * This method is idempotent and can be called multiple times
+   */
   async initStorage(): Promise<void> {
-    await this.storage.create();
-    const storedDashboardData = await this.storage.get('dashboardData');
-    if (storedDashboardData) {
-      this.dashboardData = JSON.parse(storedDashboardData);
+    if (this.initialized) return;
+    
+    try {
+      await this.storage.create();
+      const storedData = await this.storage.get(this.STORAGE_KEY);
+      
+      if (storedData) {
+        this.dashboardData = JSON.parse(storedData);
+      }
+      
+      this.initialized = true;
+    } catch (error) {
+      console.error('Error initializing dashboard storage:', error);
     }
   }
 
+  /**
+   * Get courses from CourseData service
+   */
+  async getCourses(): Promise<Course[]> {
+    return this.courseData.getCourseDetails();
+  }
+
+  /**
+   * Update recent activity with course, question set and score
+   */
   async updateRecents(
     course: Course,
     questionSet: QuestionSet,
     score: number,
   ): Promise<void> {
-    this.dashboardData.recentCourse = course;
-    this.dashboardData.recentQuestionSet = questionSet;
-    this.dashboardData.recentScore = score;
-    this.dashboardData.recentCourseId = course.id; 
-    this.dashboardData.recentQuestionSetId = questionSet.id; 
-    this.dashboardData.recentImageUrl = course.imageUrl;
-    // Convert the dashboard data to a JSON string and save it to storage
-    await this.storage.set('dashboardData', JSON.stringify(this.dashboardData));
-
+    await this.initStorage();
+    
+    try {
+      this.dashboardData.recentCourse = course;
+      this.dashboardData.recentQuestionSet = questionSet;
+      this.dashboardData.recentScore = score;
+      this.dashboardData.recentCourseId = course.id; 
+      this.dashboardData.recentQuestionSetId = questionSet.id; 
+      this.dashboardData.recentImageUrl = course.imageUrl;
+      
+      // Save to storage
+      await this.storage.set(this.STORAGE_KEY, JSON.stringify(this.dashboardData));
+    } catch (error) {
+      console.error('Error updating recent activity:', error);
+    }
   }
 
-  getDashboardData(): DashboardData {
+  /**
+   * Get all dashboard data
+   */
+  async getDashboardData(): Promise<DashboardData> {
+    await this.initStorage();
     return this.dashboardData;
   }
-  getRecentCourse(): Course | null {
+
+  /**
+   * Get recent course
+   */
+  async getRecentCourse(): Promise<Course | null> {
+    await this.initStorage();
     return this.dashboardData.recentCourse;
   }
-  getRecentQuestionSet(): QuestionSet | null {
+
+  /**
+   * Get recent question set
+   */
+  async getRecentQuestionSet(): Promise<QuestionSet | null> {
+    await this.initStorage();
     return this.dashboardData.recentQuestionSet;
   }
-  getRecentScore(): number | null {
+
+  /**
+   * Get recent score
+   */
+  async getRecentScore(): Promise<number | null> {
+    await this.initStorage();
     return this.dashboardData.recentScore;
   }
 
-  // Clears the recent course, question set, and score from the dashboard data
+  /**
+   * Clear all recent data
+   */
   async clearRecents(): Promise<void> {
-    this.dashboardData = {
-      recentCourse: null,
-      recentQuestionSet: null,
-      recentScore: null,
-      recentCourseId: null,
-      recentQuestionSetId: null,
-      recentImageUrl: null,
-    };
+    await this.initStorage();
+    
+    try {
+      this.dashboardData = {
+        recentCourse: null,
+        recentQuestionSet: null,
+        recentScore: null,
+        recentCourseId: null,
+        recentQuestionSetId: null,
+        recentImageUrl: null,
+      };
 
-    // Clear the dashboard data from storage
-    await this.storage.remove('dashboardData');
-
-    console.log('Dashboard data cleared.');
+      await this.storage.remove(this.STORAGE_KEY);
+    } catch (error) {
+      console.error('Error clearing dashboard data:', error);
+    }
   }
 }
