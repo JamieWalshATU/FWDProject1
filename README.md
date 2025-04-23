@@ -17,6 +17,7 @@ Run the following command in the terminal to generate the environment files:
 ```sh
 ng g environments
 ```
+ℹ️ <i>ALternatively, you can rename ``` enviromnemntsTemplate``` to ``` environments ```</i>
 
 ## 📌 Step 2: Configure Environment Files
 
