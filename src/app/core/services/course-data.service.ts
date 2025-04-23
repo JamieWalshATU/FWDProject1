@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Course, QuestionSet } from '../models/course.model';
 import { Storage } from '@ionic/storage-angular';
+import { ErrorLoggerService } from './error-logger.service';
+
 @Injectable({
   providedIn: 'root',
 })
 export class CourseData {
   public courses: Course[] = [];
+  private logger = inject(ErrorLoggerService);
 
   constructor(private storage: Storage) {
     this.initStorage();
@@ -59,7 +62,7 @@ export class CourseData {
     );
     if (index !== -1) {
       this.courses[index] = updatedCourse;
-      console.log('Updated course:', updatedCourse);
+      this.logger.log('Updated course: ' + JSON.stringify(updatedCourse));
       await this.saveToStorage();
       return updatedCourse;
     }
@@ -75,9 +78,8 @@ export class CourseData {
     if (courseIndex !== -1) {
       this.courses.splice(courseIndex, 1);
       this.saveToStorage(); 
-
     } else {
-      console.error(`Course with ID ${id} not found.`);
+      this.logger.handleError(new Error(`Course with ID ${id} not found.`));
     }
   }
 }

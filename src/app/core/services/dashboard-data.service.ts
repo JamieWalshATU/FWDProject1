@@ -1,7 +1,8 @@
 import { CourseData } from './course-data.service';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Course, McqQuestion, QuestionSet } from '../models/course.model';
 import { Storage } from '@ionic/storage-angular';
+import { ErrorLoggerService } from './error-logger.service';
 
 // Saves all Dashboard data in a single object
 // This is to avoid multiple storage calls and to keep the code clean
@@ -11,8 +12,8 @@ export interface DashboardData {
   recentCourse: Course | null;
   recentQuestionSet: QuestionSet | null;
   recentScore: number | null;
-  recentCourseId: string | null; 
-  recentQuestionSetId: string | null; 
+  recentCourseId: string | null;
+  recentQuestionSetId: string | null;
   recentImageUrl: string | null;
 }
 
@@ -29,13 +30,15 @@ export class DashboardDataService {
     recentImageUrl: null,
   };
 
+  private logger = inject(ErrorLoggerService);
+
   constructor(
     private courseData: CourseData,
     private storage: Storage,
   ) {
     // Creates a separate instance of the storage for the dashboard data
     this.initStorage().then(() => {
-      console.log('Dashboard storage initialized:', this.dashboardData);
+      this.logger.log('Dashboard storage initialized!');
     });
   }
 
@@ -99,6 +102,6 @@ export class DashboardDataService {
     // Clear the dashboard data from storage
     await this.storage.remove('dashboardData');
 
-    console.log('Dashboard data cleared.');
+    this.logger.log('Dashboard data cleared.');
   }
 }

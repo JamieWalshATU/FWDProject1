@@ -19,6 +19,8 @@ import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { environment } from './environments/environment';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { ErrorHandler } from '@angular/core';
+import { ErrorLoggerService } from './app/core/services/error-logger.service';
 
 if (environment.production) {
   enableProdMode();
@@ -33,5 +35,7 @@ bootstrapApplication(AppComponent, {
       registrationStrategy: 'registerWhenStable:30000',
     }),
     importProvidersFrom(IonicStorageModule.forRoot()),
+    { provide: ErrorHandler, useClass: ErrorLoggerService },
+    ErrorLoggerService,
   ],
 });

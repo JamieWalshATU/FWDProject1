@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DashboardDataService } from '../../services/dashboard-data.service';
 import { Course, QuestionSet } from '../../models/course.model';
 import {
@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RouterLink } from '@angular/router';
+import { ErrorLoggerService } from '../../services/error-logger.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -42,6 +43,8 @@ export class DashboardComponent implements OnInit {
 
   // This variable is used to animate the score percentage
   scorePercentageAnimated: number = 0; 
+
+  private logger = inject(ErrorLoggerService);
 
   constructor(private dashboardDataService: DashboardDataService) {}
 
@@ -96,7 +99,8 @@ export class DashboardComponent implements OnInit {
       this.recentQuestionSetId = this.recentQuestionSet?.id || null;
       this.recentImageUrl = this.recentCourse?.imageUrl || null;
     } catch (error) {
-      console.error('Failed to load recent activity data:', error);
+      const errorMessage = `Failed to load recent activity data: ${String(error)}`;
+      this.logger.log(errorMessage);
     }
   }
 }

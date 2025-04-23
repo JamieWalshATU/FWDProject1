@@ -1,4 +1,16 @@
 .sidebar {
   width: 200px;
-  padding-right: 15px;
+  padding-right: 
+  15px;
+}
+
+#errorLogs {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  display: flex;
+  justify-content: end;
 }

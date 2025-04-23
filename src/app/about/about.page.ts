@@ -1,3 +1,4 @@
+import { ErrorLoggerService } from '../core/services/error-logger.service';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -11,15 +12,14 @@ import {
   IonList,
   IonListHeader,
   IonItem,
-  IonAccordionGroup,
-} from '@ionic/angular/standalone';
+  IonAccordionGroup, IonButton } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.page.html',
   styleUrls: ['./about.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButton, 
     IonItem,
     IonList,
     IonContent,
@@ -42,11 +42,10 @@ export class AboutPage implements OnInit, AfterViewInit {
     { id: 'apiSetup', title: 'API Setup' },
     { id: 'usage', title: 'Usage Guide' },
     { id: 'troubleshooting', title: 'Troubleshooting' },
-    { id: 'about', title: 'About' },
   ];
 
   activeSection = 'intro';
-  constructor() {}
+  constructor(private errorLoggerService: ErrorLoggerService) {}
   ngOnInit() {}
 
   ngAfterViewInit() {
@@ -78,5 +77,13 @@ export class AboutPage implements OnInit, AfterViewInit {
       const element = document.getElementById(section.id);
       if (element) observer.observe(element);
     });
+  }
+
+  downloadLogs() {
+    this.errorLoggerService.downloadLogs();
+  }
+
+  clearLogs() {
+    this.errorLoggerService.clearLogs();
   }
 }

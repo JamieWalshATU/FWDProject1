@@ -1,7 +1,7 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CourseData } from '../../services/course-data.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { McqQuestion } from '../../models/course.model';
 import { Mistral } from '@mistralai/mistralai';
@@ -16,6 +16,7 @@ import {
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { documentOutline } from 'ionicons/icons';
+import { ErrorLoggerService } from '../../services/error-logger.service';
 
 @Component({
   selector: 'app-pdf-parser',
@@ -35,6 +36,9 @@ import { documentOutline } from 'ionicons/icons';
   standalone: true,
 })
 export class PdfParserComponent implements OnInit {
+  
+  private logger = inject(ErrorLoggerService)
+  
   private apiKey = environment.MISTRAL_API_KEY;
   //private apiKey = ""; Used for error testing
   private client = new Mistral({ apiKey: this.apiKey });
@@ -101,10 +105,10 @@ export class PdfParserComponent implements OnInit {
       });
 
       this.uploadedPdf = response;
-      console.log('Uploaded PDF:', this.uploadedPdf);
+      this.logger.log('File uploaded successfully'); // Log the successful upload
       this.invalid = false; // Enable the button
     } catch (error) {
-      console.error('Error uploading file:', error);
+      this.logger.handleError(error); 
       // Show a user-friendly error message
       alert(
         'File upload failed. This may be due to an invalid API key or an unsupported file format. Please verify your API key and ensure the file is a valid PDF. Note: If you are using a free trial API key, it may have expired. Please check its expiration date and try again.',
@@ -117,7 +121,9 @@ export class PdfParserComponent implements OnInit {
 
   async getChatResponse(): Promise<void> {
     if (!this.uploadedPdf) {
-      console.error('No PDF uploaded. Please call parsePdf() first.');
+      this.logger.handleError(
+        new Error('No PDF file uploaded. Please upload a PDF file first.'),
+      );
       return;
     }
 
@@ -151,13 +157,14 @@ export class PdfParserComponent implements OnInit {
         const responseContent = chatResponse.choices[0].message
           .content as string;
         this.questions = this.parseQuestions(responseContent);
-        console.log(responseContent);
+
         this.addQuestionsToCourse(this.questions);
       } else {
-        console.error('No choices found in chat response.');
+        this.logger.handleError(new Error('No choices found in chat response.'));
       }
     } catch (error) {
-      console.error('Error getting chat response:', error);
+      const errorMessage = `Error getting chat response: ${String(error)}`;
+      this.logger.log(errorMessage); 
     } finally {
       this.loading = false; // Set loading to false when the request is complete
     }
@@ -168,7 +175,7 @@ export class PdfParserComponent implements OnInit {
     const questions: McqQuestion[] = [];
     // Split the response content into lines
     const lines = responseContent.split('\n');
-    console.log(lines);
+
     let currentQuestion: McqQuestion | null = null;
 
     // Loop through each line and parse the question, correct answer, and wrong answers
@@ -214,8 +221,8 @@ export class PdfParserComponent implements OnInit {
 
   async addQuestionsToCourse(questions: McqQuestion[]): Promise<void> {
     if (this.questions.length === 0) {
-      console.error(
-        'No questions to add. Please call getChatResponse() first.',
+      this.logger.handleError( 
+        new Error('No questions to add. Please call getChatResponse() first'),
       );
       return;
     }
@@ -224,7 +231,9 @@ export class PdfParserComponent implements OnInit {
       // Gets course by ID, and adds the questions to the course
       const course = await this.courseData.getCourseById(this.id);
       if (!course) {
-        console.error('Course not found.');
+        this.logger.handleError(
+          new Error('Course not found. Please check the course ID.'),
+        );
         return;
       }
       const questionSetName = `Question Set ${course.questionSets.length + 1}`;
@@ -234,7 +243,8 @@ export class PdfParserComponent implements OnInit {
       // Clears the questions array,
       this.questions = [];
     } catch (error) {
-      console.error('Error updating course with questions:', error);
+      const errorMessage = `Error updating course with questions: ${String(error)}`;
+      this.logger.log(errorMessage); 
     }
   }
 }

@@ -1,6 +1,5 @@
-import { OverlayEventDetail } from '@ionic/core/components';
 import { CourseData } from '../../../services/course-data.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -32,6 +31,7 @@ import { EditImageComponent } from '../../edit-image/edit-image.component';
 // Imports Icons from ionicons individually, explained in comment below
 import { create, helpCircleOutline, close } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { ErrorLoggerService } from '../../../services/error-logger.service';
 
 @Component({
   selector: 'app-course-details',
@@ -75,6 +75,7 @@ export class CourseDetailsPage implements OnInit {
 
   // Used to show or hide Edit Picture button & Author credits button on hover
   showButton = false;
+  private logger = inject(ErrorLoggerService);
 
   constructor(
     private route: ActivatedRoute,
@@ -105,13 +106,14 @@ export class CourseDetailsPage implements OnInit {
               this.courseImage = this.course.imageUrl;
               this.setImageUrl(this.course.imageUrl);
             } else {
-              console.error('Course not found');
+              this.logger.handleError(new Error('Course not found'));
               window.history.back();
             }
           })
           // If the course is not found, navigate back
           .catch((error: Error) => {
-            console.error('Error fetching course:', error);
+            const errorMessage = `Error fetching course: ${String(error)}`;
+            this.logger.log(errorMessage);
             window.history.back();
           });
       }

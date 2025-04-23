@@ -216,6 +216,20 @@
             requirements for running the application.
           </p>
         </div>
+
+        <div class="troubleshooting-item">
+          <h3>Detailed Logs</h3>
+          <p>
+            The application provides detailed logs for debugging purposes. You can
+            download or clear the logs below:
+          </p>
+          <ion-button id="errorLogs" expand="full" (click)="downloadLogs()">
+            Download Error Logs
+          </ion-button>
+          <ion-button id="clearLogs" expand="full" (click)="clearLogs()">
+            Clear Error Logs
+          </ion-button>
+        </div>
       </section>
     </div>
   </div>

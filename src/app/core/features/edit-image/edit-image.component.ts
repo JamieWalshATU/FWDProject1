@@ -1,12 +1,13 @@
 import { ImageStorageService } from '../../services/image-storage.service';
 import { CourseData } from '../../services/course-data.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { IonHeader, IonButton, IonContent, IonToolbar, IonButtons, IonTitle, IonIcon, IonModal, } from "@ionic/angular/standalone";
 import { ModalController, IonicModule } from '@ionic/angular';
 import { Course } from '../../models/course.model';
 import { CommonModule } from '@angular/common';
 import { imageOutline, close } from 'ionicons/icons';
 import { addIcons } from 'ionicons'; 
+import { ErrorLoggerService } from '../../services/error-logger.service';
 
 @Component({
   selector: 'app-edit-image',
@@ -31,6 +32,7 @@ export class EditImageComponent implements OnInit {
   course: Course | undefined;
   newImageUrl: string = '';
   imageUrl: string | null = null;
+  private logger = inject(ErrorLoggerService);
 
   constructor(
     private courseData: CourseData, 
@@ -72,7 +74,8 @@ export class EditImageComponent implements OnInit {
         this.newImageUrl = await this.imageStorageService.uploadImage(file);
         this.imageUrl = this.newImageUrl;
       } catch (error) {
-        console.error('Failed to upload image:', error);
+        const errorMessage = `Failed to upload image: ${String(error)}`;
+        this.logger.log(errorMessage);
       }
     }
   }

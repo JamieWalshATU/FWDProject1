@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Storage } from '@ionic/storage-angular';
-
+import { ErrorLoggerService } from './error-logger.service';
 @Injectable({
   providedIn: 'root'
 })
 export class ImageStorageService {
   private STORAGE_KEY = 'stored_images';
   private _storage: Storage | null = null;
+  private logger = inject(ErrorLoggerService);
   
   constructor(private storage: Storage) {
     this.init();
@@ -28,7 +29,8 @@ export class ImageStorageService {
         directory: Directory.Data,
       });
     } catch (error) {
-      console.error('Error saving image:', error);
+      const errorMessage = `Error saving image: ${String(error)}`;
+      this.logger.log(errorMessage);
       throw error;
     }
   }
@@ -48,7 +50,8 @@ export class ImageStorageService {
       return imageUrl;
       
     } catch (error) {
-      console.error('Error uploading image:', error);
+      const errorMessage = `Error uploading image: ${String(error)}`;
+      this.logger.log(errorMessage);
       throw error;
     }
   }

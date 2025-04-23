@@ -23,6 +23,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CourseData } from '../../services/course-data.service';
 import { Course, QuestionSet } from '../../models/course.model';
 import { DashboardDataService } from '../../services/dashboard-data.service';
+import { ErrorLoggerService } from '../../services/error-logger.service';
 
 @Component({
   selector: 'app-mcqtest',
@@ -77,6 +78,7 @@ https://dmitripavlutin.com/typescript-index-signatures/
     private route: ActivatedRoute,
     private courseData: CourseData,
     private dashboardDataService: DashboardDataService,
+    private logger: ErrorLoggerService,
   ) {}
 
   ngOnInit(): void {
@@ -144,7 +146,7 @@ https://dmitripavlutin.com/typescript-index-signatures/
   handleChange(event: any, questionIndex: number): void {
     const selectedAnswer = event.detail.value;
     this.userAnswers[questionIndex] = selectedAnswer;
-    console.log(`Question ${questionIndex + 1}: Selected "${selectedAnswer}"`);
+    this.logger.log(`Question ${questionIndex + 1}: Selected "${selectedAnswer}"`);
   }
 
   // Submit answers and calculate the score
@@ -177,10 +179,11 @@ https://dmitripavlutin.com/typescript-index-signatures/
       this.dashboardDataService
         .updateRecents(this.course, this.selectedQuestionSet, this.score)
         .then(() => {
-          console.log('Recent data updated successfully.');
+          this.logger.log('Recent data updated successfully.');
         })
         .catch((error) => {
-          console.error('Error updating recent data:', error);
+          const errorMessage = `Error updating recent data: ${String(error)}`;
+          this.logger.log(errorMessage);
         });
     }
 
@@ -189,18 +192,18 @@ https://dmitripavlutin.com/typescript-index-signatures/
       this.courseData
         .updateCourse(this.course as Course)
         .then(() => {
-          console.log('Score saved successfully');
+          this.logger.log('Score saved successfully');
         })
         .catch((error) => {
-          console.error('Error saving score:', error);
+          const errorMessage = `Error saving score: ${String(error)}`;
+          this.logger.log(errorMessage);
         });
     }
 
-    console.log('Submitted Answers:', this.userAnswers);
-    console.log(`Score: ${this.score}/${this.totalQuestions}`);
-    console.log(
-      'All scores for this set:',
-      this.selectedQuestionSet.totalScores,
+    this.logger.log('Submitted Answers: ' + JSON.stringify(this.userAnswers));
+    this.logger.log(`Score: ${this.score}/${this.totalQuestions}`);
+    this.logger.log(
+      'All scores for this set: ' + JSON.stringify(this.selectedQuestionSet?.totalScores)
     );
   }
 
