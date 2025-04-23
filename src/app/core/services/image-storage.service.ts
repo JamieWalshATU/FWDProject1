@@ -15,7 +15,7 @@ export class ImageStorageService {
   }
 
   async init() {
-    // Create storage instance
+    // Create storage instance, an attempt to unify the storage was made an can be seen in the UnifiedStorage Branch on GitHub, it became too cumbersome to maintain and was not worth the effort with the time left.
     const storage = await this.storage.create();
     this._storage = storage;
   }
@@ -62,12 +62,14 @@ export class ImageStorageService {
 
     const imageNames = await this.getImageNames();
 
+    // Reads all images from the filesystem at once
     const imagePaths = await Promise.all(
       imageNames.map(async (name) => {
         const file = await Filesystem.readFile({
           path: name,
           directory: Directory.Data,
         });
+        // Convert binary data to usable image data URL
         return `data:image/jpeg;base64,${file.data}`;
       }),
     );

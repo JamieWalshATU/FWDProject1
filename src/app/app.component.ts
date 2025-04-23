@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.logger.log('Session Started!'); // Creates a message in the error logs showing when each session starts,
+    
     // Initializes storage and populates the courses array with the data from the service
     this.courseData
       .initStorage()

@@ -1,5 +1,5 @@
 import { CourseData } from '../../../services/course-data.service';
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -75,6 +75,7 @@ export class CourseDetailsPage implements OnInit {
 
   // Used to show or hide Edit Picture button & Author credits button on hover
   showButton = false;
+
   private logger = inject(ErrorLoggerService);
 
   constructor(
@@ -135,7 +136,7 @@ export class CourseDetailsPage implements OnInit {
         }
       }
     });
-
+    // Displays Modal,
     await modal.present();
   }
 

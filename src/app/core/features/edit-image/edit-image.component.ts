@@ -9,9 +9,8 @@ import {
   IonButtons,
   IonTitle,
   IonIcon,
-  IonModal,
 } from '@ionic/angular/standalone';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Course } from '../../models/course.model';
 import { CommonModule } from '@angular/common';
 import { imageOutline, close } from 'ionicons/icons';
@@ -25,7 +24,7 @@ import { ErrorLoggerService } from '../../services/error-logger.service';
   standalone: true,
   providers: [ModalController],
   imports: [
-    CommonModule, // add this
+    CommonModule,
     IonTitle,
     IonButtons,
     IonToolbar,
@@ -37,11 +36,12 @@ import { ErrorLoggerService } from '../../services/error-logger.service';
 })
 export class EditImageComponent implements OnInit {
   @Input() courseId: string = '';
+  
+  private logger = inject(ErrorLoggerService);
 
   course: Course | undefined;
   newImageUrl: string = '';
   imageUrl: string | null = null;
-  private logger = inject(ErrorLoggerService);
 
   constructor(
     private courseData: CourseData,

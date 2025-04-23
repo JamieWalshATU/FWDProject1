@@ -36,7 +36,7 @@ export class DashboardDataService implements OnInit {
     private courseData: CourseData,
     private storage: Storage,
   ) {
-    // Creates a separate instance of the storage for the dashboard data
+    // Creates a separate instance of the storage for the dashboard data, an attempt to unify the storage was made an can be seen in the UnifiedStorage Branch on GitHub, it became too cumbersome to maintain and was not worth the effort with the time left.
     this.initStorage().then(() => {
       this.logger.log('Dashboard storage initialized!');
     });

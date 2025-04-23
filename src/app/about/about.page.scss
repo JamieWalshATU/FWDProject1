@@ -4,27 +4,32 @@
   height: 100%;
 }
 
+// Styling for the side navigation
 .sidenav {
   width: 200px;
   padding-right: 15px;
 }
 
+// Sticky navigation bar
 .sticky-nav {
   position: sticky;
   top: 0;
   padding-top: 16px;
 }
 
+// Main content area
 .content {
   flex: 1;
   padding: 16px;
   overflow-y: auto;
 }
 
+// Paragraph styling within content
 .content p {
   line-height: 1.6;
 }
 
+// Section styling
 section {
   margin-bottom: 40px;
   padding: 20px;
@@ -32,23 +37,27 @@ section {
   background-color: #f8f8f8;
 }
 
+// Active item styling in ion-item
 ion-item.active {
   --background: var(--ion-color-primary-tint);
   --color: var(--ion-color-primary-contrast);
   font-weight: bold;
 }
 
+// Heading 2 styling
 h2 {
   margin-top: 0;
   border-bottom: 2px solid var(--ion-color-primary);
   padding-bottom: 8px;
 }
 
+// Heading 3 styling
 h3 {
   color: var(--ion-color-primary);
   margin-bottom: 10px;
 }
 
+// Highlight animation for targeted sections
 section:target {
   animation: highlight 1s ease-out;
 }
@@ -67,6 +76,7 @@ section {
   min-height: 70vh;
 }
 
+// Styling for FAQ, component, and troubleshooting items
 .faq-item,
 .component-item,
 .troubleshooting-item {
@@ -75,6 +85,7 @@ section {
   border-bottom: 1px solid var(--ion-color-light-shade);
 }
 
+// Styling for code blocks
 pre {
   background: #f4f4f4;
   border: 1px solid #ddd;
@@ -84,6 +95,7 @@ pre {
   border-radius: 4px;
 }
 
+// Styling for inline code snippets
 code {
   background-color: rgba(var(--ion-color-primary-rgb), 0.1);
   padding: 2px 4px;
@@ -91,6 +103,7 @@ code {
   font-family: monospace;
 }
 
+// Basic styling for ordered and unordered lists
 ol,
 ul {
   padding-left: 20px;

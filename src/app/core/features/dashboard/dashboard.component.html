@@ -10,6 +10,7 @@
         ><span [style.color]="courseColor"> {{ recentCourse?.name }}</span>
       </p>
       <p><strong>Set:</strong> {{ recentQuestionSet.name }}</p>
+      <!-- Displaying the score percentage with animation, the animation is just a variable that counts up in intervals to the final total -->
       <mat-spinner
         mode="determinate"
         value=" {{ scorePercentageAnimated }}"

@@ -76,6 +76,7 @@ export class CourseData {
   deleteCourseById(id: string): void {
     const courseIndex = this.courses.findIndex((course) => course.id === id);
     if (courseIndex !== -1) {
+      // Remove the course from the array
       this.courses.splice(courseIndex, 1);
       this.saveToStorage();
     } else {

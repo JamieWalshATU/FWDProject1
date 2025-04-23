@@ -1,18 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 
-/*
- Course Model:
- This file defines the structure of the Course and its associated data, including questions.
- Without the outlined data structure and interfaces, the API cannot be used to
- create courses and questions.
-*/
+// This file defines the Course and QuestionSet models for the application.
 
 // Interface for a multiple-choice question
 export interface McqQuestion {
   question: string;
   correctAnswer: string;
   wrongAnswers: string[];
-  shuffledAnswers?: string[]; // Shuffled answers so that the correct answer is not always first. ** This was due to logic in the mcq test and is currently a work-around. MCQTestPage.ts should handle this. **
+  shuffledAnswers?: string[]; // Shuffled answers so that the correct answer is not always first.
 }
 // Interface for the set's of MCQ questions
 export interface QuestionSet {

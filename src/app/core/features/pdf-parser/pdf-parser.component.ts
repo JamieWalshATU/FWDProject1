@@ -18,6 +18,10 @@ import { addIcons } from 'ionicons';
 import { documentOutline } from 'ionicons/icons';
 import { ErrorLoggerService } from '../../services/error-logger.service';
 
+/*
+ * This component has some extra comments to explain how the OCR parser API works.
+ * The setup can be tricky and nuanced, so the comments help show how the app connects and sends data to the API.
+ */
 @Component({
   selector: 'app-pdf-parser',
   templateUrl: './pdf-parser.component.html',
@@ -39,7 +43,6 @@ export class PdfParserComponent implements OnInit {
   private logger = inject(ErrorLoggerService);
 
   private apiKey = environment.MISTRAL_API_KEY;
-  //private apiKey = ""; Used for error testing
   private client = new Mistral({ apiKey: this.apiKey });
   private uploadedPdf: any;
   public questions: McqQuestion[] = [];

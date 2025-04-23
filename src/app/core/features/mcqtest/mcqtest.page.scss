@@ -1,30 +1,30 @@
+// Radio button and option styling
 .radio-options {
   display: flex;
-  flex-direction: column; /* Stack radio buttons vertically */
-  margin-top: 10px; /* Add spacing between the question and answers */
+  flex-direction: column; 
+  margin-top: 10px;
 }
 
 .radio-item {
-  align-items: center; /* Center-align radio buttons and labels */
-  --inner-padding-end: 0; /* Remove extra padding on the right */
+  align-items: center; 
+  --inner-padding-end: 0;
 }
 
 ion-radio-group {
-  width: 100%; /* Ensure the radio group takes up the full width */
+  width: 100%; 
   display: block;
   --ion-color-primary: var(
     --course-color
-  ); /* Set the primary color for the radio buttons */
+  ); 
 }
 
-ion-item {
-  --inner-padding-end: 0; /* Prevent squishing of content */
+ion-radio-group ion-list-header {
+  padding-left: 0;
+  font-size: 14px;
+  min-height: 20px;
 }
 
-ion-label {
-  white-space: normal; /* Allow labels to wrap to the next line if needed */
-}
-
+// Question layout and containers
 .question-container {
   margin: 20px 16px;
 }
@@ -38,27 +38,34 @@ ion-list {
   padding-top: 0;
 }
 
-ion-radio-group ion-list-header {
-  padding-left: 0;
-  font-size: 14px;
-  min-height: 20px;
+// General element styling
+ion-item {
+  --inner-padding-end: 0; 
 }
 
+ion-label {
+  white-space: normal;
+}
+
+// Empty state and messaging
 .no-questions {
   text-align: center;
   margin-top: 20px;
   color: var(--ion-color-medium);
 }
 
+// Action buttons
 .submit-button {
   margin: 20px 16px;
 }
 
+// Dynamic theming with CSS variables
 ion-content {
-  --ion-color-primary: var(--course-color) /* Default primary color */;
+  --ion-color-primary: var(--course-color) 
 }
+
 ion-button {
   --background: var(
     --course-color
-  ); /* Set the background color to course color */
+  );
 }

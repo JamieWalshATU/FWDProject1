@@ -59,16 +59,9 @@ export class MCQTestPage implements OnInit {
   selectedQuestionSetId: string | null = null;
   selectedQuestionSet: QuestionSet | null = null;
 
-  /* 
-Track user answers by question index using a computed property signature. 
-I initially used an array (userAnswers[0], userAnswers[1], etc.), but ran into issues when the number of questions changed dynamically.
-The array approach caused problems with non-sequential indices, so I switched to using a computed property signature. 
-This allows me to dynamically store answers by question index, making it more flexible and easier to handle changing question sets. 
-
-Helpful resources: 
-https://stackoverflow.com/questions/74266527/typescript-how-to-initialize-object-with-dynamic-keys-using-index-signature?
-https://dmitripavlutin.com/typescript-index-signatures/
-*/
+  
+// Tells TS that questionIndex has to be a 'number' with a 'string' value, otherwise it will not accept any other types for the keys or values in the userAnswers object.
+// In practice this looks like: userAnswers[0] = "B"
   userAnswers: { [questionIndex: number]: string } = {};
   score: number = 0;
   totalQuestions: number = 0;

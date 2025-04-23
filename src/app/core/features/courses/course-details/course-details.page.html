@@ -9,23 +9,27 @@
 
 <ion-content [fullscreen]="true">
   <ion-card *ngIf="course" style="margin: 20px">
+    <!-- Header with mouseover edit buttons that appear on hover -->
     <ion-card-header
       id="header-content"
       (mouseenter)="showButton = true"
       (mouseleave)="showButton =false"
     >
+      <!-- Edit button that appears on hover -->
       <ion-button
         id="edit-image"
         [class.show]="showButton"
         [style.--background]="course.color"
         (click)="openEditImageModal()"
-        ><ion-icon name="create"></ion-icon
+      ><ion-icon name="create"></ion-icon
       ></ion-button>
+      
+      <!-- Help/credits button that appears on hover -->
       <ion-button
         id="credit-image"
         [class.show]="showButton"
         [style.--background]="course.color"
-        ><ion-icon name="help-circle-outline"></ion-icon
+      ><ion-icon name="help-circle-outline"></ion-icon
       ></ion-button>
     </ion-card-header>
     <ion-card-content>
@@ -37,6 +41,7 @@
       <ion-item lines="none" *ngIf="course?.description">
         <ion-label>{{ course.description }}</ion-label>
       </ion-item>
+      <!-- PDF parser component for displaying course content -->
       <app-pdf-parser
         *ngIf="courseId && courseColor"
         [id]="courseId"
@@ -45,7 +50,7 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Split view layout for question sets and questions -->
+  <!-- Split view layout with question sets on left and selected question details on right -->
   <div class="split-view" *ngIf="course?.questionSets?.length">
     <!-- Left side - Question Sets -->
     <div class="sets-panel">

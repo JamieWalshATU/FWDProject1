@@ -1,36 +1,43 @@
+// Main navigation sidebar dimensions
 .sidebar {
   width: 200px;
   padding-right: 15px;
 }
 
+// Two-panel layout for question sets and question details
 .split-view {
   display: flex;
-  height: calc(100% - 160px);
+  height: calc(100% - 160px); // Accounts for header card height
   padding: 0 16px;
   margin-top: 16px;
 }
 
+// Left panel containing question set list
 .sets-panel {
   width: 300px;
   margin-right: 16px;
   overflow-y: auto;
 }
 
+// Right panel containing selected question set details
 .questions-panel {
   flex: 1;
   overflow-y: auto;
 }
 
+// Styling for the currently selected question set
 ion-item.selected {
   --background: rgba(var(--ion-color-primary-rgb), 0.1);
   --border-color: var(--ion-color-primary);
   font-weight: bold;
 }
 
+// Content area for question answers
 .question-content {
   padding: 16px;
 }
 
+// Message shown when no question set is selected
 .no-selection {
   display: flex;
   height: 100%;
@@ -40,6 +47,7 @@ ion-item.selected {
   color: var(--ion-color-medium);
 }
 
+// Responsive layout for mobile devices
 @media (max-width: 768px) {
   .split-view {
     flex-direction: column;
@@ -53,11 +61,13 @@ ion-item.selected {
   }
 }
 
+// Header with background image (set dynamically via CSS variable)
 #header-content {
   --background: var(--imageURL) no-repeat center/cover;
   height: 150px;
 }
 
+// Animation and positioning for edit button that appears on hover
 #edit-image {
   position: absolute;
   bottom: 10px;
@@ -74,6 +84,7 @@ ion-item.selected {
   transform: translateY(0);
 }
 
+// Animation and positioning for help/credits button that appears on hover
 #credit-image {
   position: absolute;
   bottom: 10px;
