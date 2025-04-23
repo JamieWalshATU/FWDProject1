@@ -36,13 +36,13 @@ export class DashboardComponent implements OnInit {
   recentQuestionSet: QuestionSet | null = null;
   recentScore: number | null = null;
   recentScorePercentage: string | null = null;
-  recentCourseId: string | null = null; 
-  recentQuestionSetId: string | null = null; 
+  recentCourseId: string | null = null;
+  recentQuestionSetId: string | null = null;
   courseColor: string | null = null;
-  recentImageUrl: string | null = null; 
+  recentImageUrl: string | null = null;
 
   // This variable is used to animate the score percentage
-  scorePercentageAnimated: number = 0; 
+  scorePercentageAnimated: number = 0;
 
   private logger = inject(ErrorLoggerService);
 
@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
       if (this.recentImageUrl) {
         document.documentElement.style.setProperty(
           '--imageURL',
-          `url(${this.recentImageUrl})`
+          `url(${this.recentImageUrl})`,
         );
       }
     });
@@ -78,13 +78,13 @@ export class DashboardComponent implements OnInit {
   async loadRecentData(): Promise<void> {
     try {
       // Initialize storage to ensure data is available
-      await this.dashboardDataService.initStorage(); 
-      
+      await this.dashboardDataService.initStorage();
+
       // Retrieve recent activity data
       this.recentCourse = this.dashboardDataService.getRecentCourse();
       this.recentQuestionSet = this.dashboardDataService.getRecentQuestionSet();
       this.recentScore = this.dashboardDataService.getRecentScore();
-      
+
       // Calculate percentage score if a score exists
       if (this.recentScore !== null) {
         // Use question count or fallback to 1 to avoid division by zero
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit {
       } else {
         this.recentScorePercentage = null;
       }
-      
+
       this.recentCourseId = this.recentCourse?.id || null;
       this.recentQuestionSetId = this.recentQuestionSet?.id || null;
       this.recentImageUrl = this.recentCourse?.imageUrl || null;

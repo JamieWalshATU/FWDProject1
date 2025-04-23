@@ -13,7 +13,7 @@ export interface McqQuestion {
   correctAnswer: string;
   wrongAnswers: string[];
   shuffledAnswers?: string[]; // Shuffled answers so that the correct answer is not always first. ** This was due to logic in the mcq test and is currently a work-around. MCQTestPage.ts should handle this. **
-} 
+}
 // Interface for the set's of MCQ questions
 export interface QuestionSet {
   name: string;
@@ -28,7 +28,7 @@ export class Course {
   id: string;
   color: string;
   description: string = '';
-  questionSets: QuestionSet[] = []; 
+  questionSets: QuestionSet[] = [];
   questions: any;
   imageUrl: string;
 
@@ -45,7 +45,7 @@ export class Course {
   generateImageURL() {
     const rndInt = Math.floor(Math.random() * 6) + 1;
     // Images are stored in the assets/images directory as image1.jpg, image2.jpg, etc.
-    this.imageUrl = `assets/images/image${rndInt}.jpg`; 
+    this.imageUrl = `assets/images/image${rndInt}.jpg`;
     return this.imageUrl;
   }
 
@@ -54,9 +54,8 @@ export class Course {
       name,
       id: uuidv4(), // Generates a unique ID for the question set using uuid
       questions,
-      totalScores: [], 
+      totalScores: [],
     };
     this.questionSets.push(newSet);
   }
-
 }

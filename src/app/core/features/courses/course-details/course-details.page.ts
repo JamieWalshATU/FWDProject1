@@ -63,7 +63,7 @@ import { ErrorLoggerService } from '../../../services/error-logger.service';
     IonAccordion,
     IonIcon,
   ],
-  providers: []
+  providers: [],
 })
 export class CourseDetailsPage implements OnInit {
   course: Course | undefined;
@@ -80,10 +80,10 @@ export class CourseDetailsPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private courseData: CourseData,
-    private modalCtrl : ModalController
+    private modalCtrl: ModalController,
   ) {
     // Adds ionic Icons, Im unsure if this is the best case way to do this, however I couldn't not find another way to do this which seemed to work as intended
-    addIcons({create,helpCircleOutline,close});
+    addIcons({ create, helpCircleOutline, close });
   }
 
   ngOnInit(): void {
@@ -91,15 +91,13 @@ export class CourseDetailsPage implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.selectedQuestionSet = null;
 
-
-
       this.courseId = params.get('id');
       if (this.courseId) {
         // Find the course in the service
         this.courseData
           .getCourseById(this.courseId)
           .then((course: Course | undefined) => {
-            this.course = course; 
+            this.course = course;
             // Set the course color and image URL if the course is found
             if (this.course && this.course.color) {
               this.courseColor = this.course.color;
@@ -137,25 +135,24 @@ export class CourseDetailsPage implements OnInit {
         }
       }
     });
-  
+
     await modal.present();
   }
 
   viewQuestions(questionSet: QuestionSet): void {
-    this.selectedQuestionSet = questionSet; 
+    this.selectedQuestionSet = questionSet;
   }
 
   deleteCourse(): void {
     if (this.courseId) {
-      this.courseData.deleteCourseById(this.courseId); 
+      this.courseData.deleteCourseById(this.courseId);
       // Navigate back to the previous page after deletion
-      window.history.back(); 
+      window.history.back();
     }
   }
 
   takeTest(questionSet: QuestionSet): void {
     if (this.courseId) {
-    
       this.courseData.updateCourse(this.course as Course).then(() => {
         window.location.href = `/mcqtest/${this.courseId}/${questionSet.id}`;
       });

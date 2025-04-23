@@ -3,15 +3,18 @@
 **Source**: `src/app/core/features/dashboard/dashboard.component.ts`
 
 ## Overview
+
 `DashboardComponent` shows recent activity: last taken course, question set, score, and quick links to features.
 
 ## Properties
+
 - `recentCourse`, `recentQuestionSet`, `recentScore` – retrieved from `DashboardDataService`
 - `recentScorePercentage` – computed percentage
 - `courseColor`, `recentImageUrl` – styling variables
 - `scorePercentageAnimated` – for spinner animation
 
 ## Initialization
+
 ```ts
 ngOnInit(): void {
   this.loadRecentData().then(() => {
@@ -24,10 +27,12 @@ ngOnInit(): void {
   }, 1000);
 }
 ```
+
 - Calls `loadRecentData` to populate fields and update CSS variables
 - Starts interval to animate spinner
 
 ## Data Loading
+
 ```ts
 async loadRecentData(): Promise<void> {
   await this.dashboardDataService.initStorage();
@@ -43,12 +48,14 @@ async loadRecentData(): Promise<void> {
   this.recentImageUrl = this.recentCourse?.imageUrl || null;
 }
 ```
+
 - Initializes storage, retrieves recents, computes percentage, stores IDs and image URL
 
 ## Template Highlights
+
 - Card for recent results: spinner showing `scorePercentageAnimated`, buttons to retake test
 - Conditional rendering when no data
 
 ---
 
-*End of DashboardComponent breakdown.*
+_End of DashboardComponent breakdown._

@@ -1,7 +1,7 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorLoggerService implements ErrorHandler {
   private logs: string[] = [];
@@ -10,8 +10,8 @@ export class ErrorLoggerService implements ErrorHandler {
     const timestamp = new Date().toISOString();
     const entry = `#ERROR: [${timestamp}]  ${error?.message || error.toString()}`;
     this.logs.push(entry);
-    alert("An error has occurred!: " + entry);
-    alert("A full detailed error log can be viewed in the about section.");
+    alert('An error has occurred!: ' + entry);
+    alert('A full detailed error log can be viewed in the about section.');
   }
 
   log(msg: string): void {
@@ -26,8 +26,8 @@ export class ErrorLoggerService implements ErrorHandler {
 
   clearLogs(): void {
     this.logs = [];
-    this.log("LOGS CLEARED");
-    this.log("Session Started!");
+    this.log('LOGS CLEARED');
+    this.log('Session Started!');
   }
 
   downloadLogs(): void {

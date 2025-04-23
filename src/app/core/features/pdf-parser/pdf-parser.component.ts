@@ -6,13 +6,13 @@ import { environment } from 'src/environments/environment';
 import { McqQuestion } from '../../models/course.model';
 import { Mistral } from '@mistralai/mistralai';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { 
-  IonButton, 
-  IonCard, 
-  IonCardContent, 
-  IonCardHeader, 
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
   IonCardTitle,
-  IonIcon
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { documentOutline } from 'ionicons/icons';
@@ -23,22 +23,21 @@ import { ErrorLoggerService } from '../../services/error-logger.service';
   templateUrl: './pdf-parser.component.html',
   styleUrls: ['./pdf-parser.component.scss'],
   imports: [
-    FormsModule, 
-    CommonModule, 
+    FormsModule,
+    CommonModule,
     MatProgressSpinnerModule,
     IonButton,
     IonCard,
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    IonIcon
+    IonIcon,
   ],
   standalone: true,
 })
 export class PdfParserComponent implements OnInit {
-  
-  private logger = inject(ErrorLoggerService)
-  
+  private logger = inject(ErrorLoggerService);
+
   private apiKey = environment.MISTRAL_API_KEY;
   //private apiKey = ""; Used for error testing
   private client = new Mistral({ apiKey: this.apiKey });
@@ -47,7 +46,8 @@ export class PdfParserComponent implements OnInit {
   public invalid: boolean = true;
   public loading: boolean = false;
   constructor(private courseData: CourseData) {
-      addIcons({documentOutline});}
+    addIcons({ documentOutline });
+  }
 
   @Input() id: string = '';
   @Input() color: string = '';
@@ -61,9 +61,9 @@ export class PdfParserComponent implements OnInit {
     if (this.color) {
       // Set the color for the course
       // This is a workaround to set the CSS variable for the course color
-      document.documentElement.style.setProperty('--course-color', this.color); 
+      document.documentElement.style.setProperty('--course-color', this.color);
     }
-    
+
     // Initialize document icon for PDF upload
     addIcons({ documentOutline });
   }
@@ -85,7 +85,6 @@ export class PdfParserComponent implements OnInit {
 
   // Uploads the PDF file to Mistral and parses it
   async parsePdf(file: File) {
-    
     // API Usage Guidelines
     const formData = new FormData();
     formData.append('file', file);
@@ -108,7 +107,7 @@ export class PdfParserComponent implements OnInit {
       this.logger.log('File uploaded successfully'); // Log the successful upload
       this.invalid = false; // Enable the button
     } catch (error) {
-      this.logger.handleError(error); 
+      this.logger.handleError(error);
       // Show a user-friendly error message
       alert(
         'File upload failed. This may be due to an invalid API key or an unsupported file format. Please verify your API key and ensure the file is a valid PDF. Note: If you are using a free trial API key, it may have expired. Please check its expiration date and try again.',
@@ -160,11 +159,13 @@ export class PdfParserComponent implements OnInit {
 
         this.addQuestionsToCourse(this.questions);
       } else {
-        this.logger.handleError(new Error('No choices found in chat response.'));
+        this.logger.handleError(
+          new Error('No choices found in chat response.'),
+        );
       }
     } catch (error) {
       const errorMessage = `Error getting chat response: ${String(error)}`;
-      this.logger.log(errorMessage); 
+      this.logger.log(errorMessage);
     } finally {
       this.loading = false; // Set loading to false when the request is complete
     }
@@ -180,8 +181,7 @@ export class PdfParserComponent implements OnInit {
 
     // Loop through each line and parse the question, correct answer, and wrong answers
     lines.forEach((line) => {
-      
-      // If the line starts with 'Q:', it indicates a new question, 
+      // If the line starts with 'Q:', it indicates a new question,
       if (line.startsWith('Q:')) {
         if (currentQuestion) {
           questions.push(currentQuestion);
@@ -193,7 +193,7 @@ export class PdfParserComponent implements OnInit {
           correctAnswer: '',
           wrongAnswers: [],
         };
-      // If the line starts with 'A:', it indicates the correct answer, subtracting 2 to remove the 'A:' prefix
+        // If the line starts with 'A:', it indicates the correct answer, subtracting 2 to remove the 'A:' prefix
       } else if (line.startsWith('A:')) {
         if (currentQuestion) {
           const answerText = line.substring(2).trim();
@@ -221,7 +221,7 @@ export class PdfParserComponent implements OnInit {
 
   async addQuestionsToCourse(questions: McqQuestion[]): Promise<void> {
     if (this.questions.length === 0) {
-      this.logger.handleError( 
+      this.logger.handleError(
         new Error('No questions to add. Please call getChatResponse() first'),
       );
       return;
@@ -244,7 +244,7 @@ export class PdfParserComponent implements OnInit {
       this.questions = [];
     } catch (error) {
       const errorMessage = `Error updating course with questions: ${String(error)}`;
-      this.logger.log(errorMessage); 
+      this.logger.log(errorMessage);
     }
   }
 }

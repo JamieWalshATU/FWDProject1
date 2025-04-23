@@ -3,11 +3,13 @@
 **Source**: `src/app/core/features/courses/course-create/course-create.page.ts`
 
 ## Overview
+
 `CourseCreatePage` provides a form for instructors to enter course name, description, and color, then create a new course via `CourseDataService`.
 
 ## Component Metadata
 
 ## Constructor & Form
+
 ```ts
 constructor(
   private courseData: CourseData,
@@ -22,9 +24,11 @@ constructor(
   });
 }
 ```
+
 - Builds reactive form with default color.
 
 ## Creating Course
+
 ```ts
 async generateCourse() {
   if (!this.courseForm.valid) return;
@@ -36,12 +40,14 @@ async generateCourse() {
   this.navCtrl.pop();
 }
 ```
+
 - Validates form, persists new course, shows toast, resets form, navigates back.
 
 ## Template Highlights
+
 - `<form [formGroup]="courseForm">` with `ion-input` for `name`, `color` picker
 - Submit `<ion-button (click)="generateCourse()" [disabled]="!courseForm.valid">Create Course</ion-button>`
 
 ---
 
-*End of CourseCreatePage breakdown.*
+_End of CourseCreatePage breakdown._

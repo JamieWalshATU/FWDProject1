@@ -9,8 +9,8 @@ describe('EditImageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditImageComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [EditImageComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EditImageComponent);

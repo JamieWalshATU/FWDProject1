@@ -3,17 +3,18 @@
 **Source**: `src/app/core/features/mcqtest/mcqtest.page.ts`
 
 ## Overview
+
 `MCQTestPage` renders a multiple-choice quiz for a selected course and question set. It handles answer selection, scoring, persistence, and navigation.
 
-
-
 ## Properties
+
 - `course`, `courseId`, `selectedQuestionSet`, `selectedQuestionSetId` – loaded from `CourseData` and `ActivatedRoute`
 - `userAnswers: { [index: number]: string }` – tracks selected answers by question index
 - `score`, `totalQuestions`, `submitted` – quiz state
 - `courseColor` – CSS variable for theming
 
 ## Initialization
+
 ```ts
 ngOnInit(): void {
   this.route.paramMap.subscribe(params => {
@@ -38,9 +39,11 @@ ngOnInit(): void {
   });
 }
 ```
+
 - Fetches IDs from URL, loads course and question set, sets theme, shuffles answers.
 
 ## Shuffling Answers
+
 ```ts
 shuffleAnswers(question: { correctAnswer: string; wrongAnswers: string[] }): string[] {
   const all = [question.correctAnswer, ...question.wrongAnswers];
@@ -51,17 +54,21 @@ shuffleAnswers(question: { correctAnswer: string; wrongAnswers: string[] }): str
   return all;
 }
 ```
+
 - Uses Durstenfeld shuffle to randomize answer order.
 
 ## Handling Selection
+
 ```ts
 handleChange(event: any, index: number): void {
   this.userAnswers[index] = event.detail.value;
 }
 ```
+
 - Updates `userAnswers` map on radio change.
 
 ## Submitting & Scoring
+
 ```ts
 submitAnswers(): void {
   this.score = 0;
@@ -79,9 +86,11 @@ submitAnswers(): void {
   this.courseData.updateCourse(this.course!);
 }
 ```
+
 - Calculates score, updates recents and course persistence.
 
 ## Retaking & Navigation
+
 ```ts
 retakeTest(): void {
   this.submitted = false;
@@ -94,14 +103,16 @@ return(): void {
   window.history.back();
 }
 ```
+
 - `retakeTest()` resets state and reshuffles.
 - `return()` navigates back.
 
 ## Template Highlights
+
 - `<ion-list>` of questions with `<ion-radio-group>` for choices
 - Submit button disabled until answers selected
 - Displays result and retake option after submission
 
 ---
 
-*End of MCQTestPage breakdown.*
+_End of MCQTestPage breakdown._

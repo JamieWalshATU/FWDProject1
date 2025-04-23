@@ -59,7 +59,7 @@ export class MCQTestPage implements OnInit {
   selectedQuestionSetId: string | null = null;
   selectedQuestionSet: QuestionSet | null = null;
 
-/* 
+  /* 
 Track user answers by question index using a computed property signature. 
 I initially used an array (userAnswers[0], userAnswers[1], etc.), but ran into issues when the number of questions changed dynamically.
 The array approach caused problems with non-sequential indices, so I switched to using a computed property signature. 
@@ -82,45 +82,43 @@ https://dmitripavlutin.com/typescript-index-signatures/
   ) {}
 
   ngOnInit(): void {
-    
     // Returns courseId and questionSetId from the URL parameters
     this.route.paramMap.subscribe((params) => {
       this.selectedQuestionSetId = params.get('questionSetId');
       this.courseId = params.get('courseId');
-      
+
       // If courseId is present, fetch the course data
       if (this.courseId) {
-        this.courseData.getCourseById(this.courseId) 
-          .then((course) => {
-            this.course = course; 
+        this.courseData.getCourseById(this.courseId).then((course) => {
+          this.course = course;
 
-            if (this.course && this.selectedQuestionSetId) {
+          if (this.course && this.selectedQuestionSetId) {
+            this.selectedQuestionSet =
+              this.course.questionSets.find(
+                (set) => set.id === this.selectedQuestionSetId,
+              ) ?? null;
 
-              this.selectedQuestionSet = this.course.questionSets.find(
-                (set) => set.id === this.selectedQuestionSetId
-              ) ?? null; 
-
-              this.courseColor = this.courseId
-                ? this.courseData.getCourseColor(this.courseId)
-                : null; 
-              // Set the course color as a CSS variable, used where course color couldn't be implemented consistently
-              // ** This is a workaround to set the course color in the CSS variable, and is to be changed where possible **
-              if (this.courseColor) {
-                document.documentElement.style.setProperty(
-                  '--course-color', 
-                  this.courseColor  
-                );
-              }
-              
-              // If the selected question set is found, shuffle the answers
-              if (this.selectedQuestionSet) {
-                this.totalQuestions = this.selectedQuestionSet.questions.length;
-                this.selectedQuestionSet.questions.forEach((question) => {
-                  question.shuffledAnswers = this.shuffleAnswers(question); 
-                });
-              }
+            this.courseColor = this.courseId
+              ? this.courseData.getCourseColor(this.courseId)
+              : null;
+            // Set the course color as a CSS variable, used where course color couldn't be implemented consistently
+            // ** This is a workaround to set the course color in the CSS variable, and is to be changed where possible **
+            if (this.courseColor) {
+              document.documentElement.style.setProperty(
+                '--course-color',
+                this.courseColor,
+              );
             }
-          });
+
+            // If the selected question set is found, shuffle the answers
+            if (this.selectedQuestionSet) {
+              this.totalQuestions = this.selectedQuestionSet.questions.length;
+              this.selectedQuestionSet.questions.forEach((question) => {
+                question.shuffledAnswers = this.shuffleAnswers(question);
+              });
+            }
+          }
+        });
       }
     });
   }
@@ -146,7 +144,9 @@ https://dmitripavlutin.com/typescript-index-signatures/
   handleChange(event: any, questionIndex: number): void {
     const selectedAnswer = event.detail.value;
     this.userAnswers[questionIndex] = selectedAnswer;
-    this.logger.log(`Question ${questionIndex + 1}: Selected "${selectedAnswer}"`);
+    this.logger.log(
+      `Question ${questionIndex + 1}: Selected "${selectedAnswer}"`,
+    );
   }
 
   // Submit answers and calculate the score
@@ -203,7 +203,8 @@ https://dmitripavlutin.com/typescript-index-signatures/
     this.logger.log('Submitted Answers: ' + JSON.stringify(this.userAnswers));
     this.logger.log(`Score: ${this.score}/${this.totalQuestions}`);
     this.logger.log(
-      'All scores for this set: ' + JSON.stringify(this.selectedQuestionSet?.totalScores)
+      'All scores for this set: ' +
+        JSON.stringify(this.selectedQuestionSet?.totalScores),
     );
   }
 

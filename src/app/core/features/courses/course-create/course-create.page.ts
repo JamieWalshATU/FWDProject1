@@ -85,7 +85,6 @@ export class CourseCreatePage implements OnInit {
     }
     // Creates a new course with the verified data
     this.courseData.createCourse(this.courseName, this.courseColor).then(() => {
-
       //Refresh the course list after creation and resets the form
       this.loadCourses();
       this.courseName = '';
@@ -94,7 +93,7 @@ export class CourseCreatePage implements OnInit {
   }
 
   deleteCourse(id: string): void {
-    this.courseData.deleteCourseById(id); 
-    this.loadCourses(); 
+    this.courseData.deleteCourseById(id);
+    this.loadCourses();
   }
 }

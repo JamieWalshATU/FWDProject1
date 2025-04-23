@@ -1,12 +1,21 @@
 import { ImageStorageService } from '../../services/image-storage.service';
 import { CourseData } from '../../services/course-data.service';
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { IonHeader, IonButton, IonContent, IonToolbar, IonButtons, IonTitle, IonIcon, IonModal, } from "@ionic/angular/standalone";
+import {
+  IonHeader,
+  IonButton,
+  IonContent,
+  IonToolbar,
+  IonButtons,
+  IonTitle,
+  IonIcon,
+  IonModal,
+} from '@ionic/angular/standalone';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { Course } from '../../models/course.model';
 import { CommonModule } from '@angular/common';
 import { imageOutline, close } from 'ionicons/icons';
-import { addIcons } from 'ionicons'; 
+import { addIcons } from 'ionicons';
 import { ErrorLoggerService } from '../../services/error-logger.service';
 
 @Component({
@@ -28,24 +37,24 @@ import { ErrorLoggerService } from '../../services/error-logger.service';
 })
 export class EditImageComponent implements OnInit {
   @Input() courseId: string = '';
-  
+
   course: Course | undefined;
   newImageUrl: string = '';
   imageUrl: string | null = null;
   private logger = inject(ErrorLoggerService);
 
   constructor(
-    private courseData: CourseData, 
+    private courseData: CourseData,
     private imageStorageService: ImageStorageService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
   ) {
     addIcons({ imageOutline, close });
   }
-  
+
   ngOnInit() {
     // Load the course data when the modal opens
     if (this.courseId) {
-      this.courseData.getCourseById(this.courseId).then(course => {
+      this.courseData.getCourseById(this.courseId).then((course) => {
         this.course = course;
         if (course?.imageUrl) {
           this.imageUrl = course.imageUrl;
@@ -68,7 +77,7 @@ export class EditImageComponent implements OnInit {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      
+
       try {
         // Upload the file and get URL
         this.newImageUrl = await this.imageStorageService.uploadImage(file);

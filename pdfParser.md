@@ -3,13 +3,16 @@
 **Source**: `src/app/core/features/pdf-parser/pdf-parser.component.ts`
 
 ## Overview
+
 `PdfParserComponent` lets you upload a PDF, send it to Mistral for OCR + MCQ generation, parse the response, and save the resulting questions to a course.
 
 ## Inputs
+
 - `@Input() id: string = ''` – ID of the course to attach questions to.
 - `@Input() color: string = ''` – CSS color for buttons and card header.
 
 ## Initialization
+
 ```ts
 ngOnInit() {
   if (!this.apiKey) {
@@ -21,9 +24,11 @@ ngOnInit() {
   addIcons({ documentOutline });
 }
 ```
+
 - Checks for API key, sets CSS variable, registers the icon.
 
 ## File Selection
+
 ```ts
 openFileSelector() {
   document.getElementById('pdf-upload')?.click();
@@ -37,10 +42,12 @@ onFileChange(event: any) {
   }
 }
 ```
+
 - `openFileSelector()` triggers the hidden file input.
 - `onFileChange` grabs the selected PDF and begins parsing.
 
 ## PDF Upload & OCR
+
 ```ts
 async parsePdf(file: File) {
   this.loading = true;
@@ -59,9 +66,11 @@ async parsePdf(file: File) {
   }
 }
 ```
+
 - Converts the PDF to `ArrayBuffer` and uploads it for OCR.
 
 ## Generating Questions
+
 ```ts
 async getChatResponse(): Promise<void> {
   if (!this.uploadedPdf) return;
@@ -72,7 +81,7 @@ async getChatResponse(): Promise<void> {
       model: 'mistral-small-latest',
       messages: [
         { role: 'user', content: [
-            { type: 'text', text: 
+            { type: 'text', text:
               'Can you generate 10 MCQ based questions on this document?\nQ: [question]\nA: [answer]\nW1: [wrong1]\nW2: [wrong2]\nW3: [wrong3]' },
             { type: 'document_url', documentUrl: url }
           ]
@@ -89,9 +98,11 @@ async getChatResponse(): Promise<void> {
   }
 }
 ```
+
 - Requests MCQs from Mistral, parses the raw text.
 
 ## Parsing the Response
+
 ```ts
 parseQuestions(responseContent: string): McqQuestion[] {
   const questions: McqQuestion[] = [];
@@ -114,9 +125,11 @@ parseQuestions(responseContent: string): McqQuestion[] {
   return questions;
 }
 ```
+
 - Splits on newline, identifies `Q:`, `A:`, `W1:`,`W2:`,`W3:` and builds `McqQuestion` objects.
 
 ## Saving to Course
+
 ```ts
 async addQuestionsToCourse(questions: McqQuestion[]): Promise<void> {
   if (questions.length === 0) return console.error('No questions to add.');
@@ -128,23 +141,17 @@ async addQuestionsToCourse(questions: McqQuestion[]): Promise<void> {
   this.questions = [];
 }
 ```
-- Retrieves the course by `id`, creates a new set, persists via `CourseDataService`.  
+
+- Retrieves the course by `id`, creates a new set, persists via `CourseDataService`.
 
 ## Sample API Response
+
 ```ts
-[
-  "Here are 10 multiple-choice questions based on the provided document:",
-  "",
-  "Q: Who is the author of PrefixPacker?",
-  "A: Jamie Walsh",
-  "W1: John Doe",
-  "W2: Alice Smith",
-  "W3: Bob Johnson",
- 
-]
+["Here are 10 multiple-choice questions based on the provided document:", "", "Q: Who is the author of PrefixPacker?", "A: Jamie Walsh", "W1: John Doe", "W2: Alice Smith", "W3: Bob Johnson"];
 ```
 
 ## parseQuestions Function: Line-by-Line Breakdown
+
 ```ts
 parseQuestions(responseContent: string): McqQuestion[] {
   const questions: McqQuestion[] = [];          // 1. Initialize empty array for parsed questions
@@ -174,4 +181,4 @@ parseQuestions(responseContent: string): McqQuestion[] {
 
 ---
 
-*End of PdfParserComponent breakdown.*
+_End of PdfParserComponent breakdown._

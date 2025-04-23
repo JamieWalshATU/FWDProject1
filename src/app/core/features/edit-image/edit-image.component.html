@@ -5,7 +5,9 @@
     </ion-buttons>
     <ion-title>Edit Image</ion-title>
     <ion-buttons slot="end">
-      <ion-button [strong]="true" (click)="confirm()" [disabled]="!imageUrl">Confirm</ion-button>
+      <ion-button [strong]="true" (click)="confirm()" [disabled]="!imageUrl"
+        >Confirm</ion-button
+      >
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,16 +17,17 @@
       <ion-icon name="image-outline" slot="start"></ion-icon>
       Select Image
     </ion-button>
-    <input 
-      type="file" 
-      #fileInput 
-      style="display: none" 
-      (change)="onFileSelected($event)" 
-      accept="image/.jpeg"> 
+    <input
+      type="file"
+      #fileInput
+      style="display: none"
+      (change)="onFileSelected($event)"
+      accept="image/.jpeg"
+    />
   </div>
-  
+
   <div *ngIf="imageUrl" class="preview-container">
     <h4>Preview:</h4>
-    <img [src]="imageUrl" alt="Selected image preview" class="image-preview">
+    <img [src]="imageUrl" alt="Selected image preview" class="image-preview" />
   </div>
 </ion-content>

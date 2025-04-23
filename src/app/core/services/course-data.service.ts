@@ -40,7 +40,7 @@ export class CourseData {
     const course = this.courses.find((course) => course.id === id);
     return course ? course.color : null;
   }
-// Creates a reference to the course object in the storage, and parses the data into a Course object. 
+  // Creates a reference to the course object in the storage, and parses the data into a Course object.
   async getCourseById(id: string): Promise<Course | undefined> {
     const courseData = this.courses.find((course) => course.id === id);
 
@@ -68,7 +68,7 @@ export class CourseData {
     }
     throw new Error('Course not found');
   }
-  // Saves the courses array to storage in JSON format. 
+  // Saves the courses array to storage in JSON format.
   async saveToStorage() {
     await this.storage.set('courses', JSON.stringify(this.courses));
   }
@@ -77,7 +77,7 @@ export class CourseData {
     const courseIndex = this.courses.findIndex((course) => course.id === id);
     if (courseIndex !== -1) {
       this.courses.splice(courseIndex, 1);
-      this.saveToStorage(); 
+      this.saveToStorage();
     } else {
       this.logger.handleError(new Error(`Course with ID ${id} not found.`));
     }

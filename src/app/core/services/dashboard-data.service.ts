@@ -1,5 +1,5 @@
 import { CourseData } from './course-data.service';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, OnInit } from '@angular/core';
 import { Course, McqQuestion, QuestionSet } from '../models/course.model';
 import { Storage } from '@ionic/storage-angular';
 import { ErrorLoggerService } from './error-logger.service';
@@ -20,7 +20,7 @@ export interface DashboardData {
 @Injectable({
   providedIn: 'root',
 })
-export class DashboardDataService {
+export class DashboardDataService implements OnInit {
   private dashboardData: DashboardData = {
     recentCourse: null,
     recentQuestionSet: null,
@@ -67,12 +67,11 @@ export class DashboardDataService {
     this.dashboardData.recentCourse = course;
     this.dashboardData.recentQuestionSet = questionSet;
     this.dashboardData.recentScore = score;
-    this.dashboardData.recentCourseId = course.id; 
-    this.dashboardData.recentQuestionSetId = questionSet.id; 
+    this.dashboardData.recentCourseId = course.id;
+    this.dashboardData.recentQuestionSetId = questionSet.id;
     this.dashboardData.recentImageUrl = course.imageUrl;
     // Convert the dashboard data to a JSON string and save it to storage
     await this.storage.set('dashboardData', JSON.stringify(this.dashboardData));
-
   }
 
   getDashboardData(): DashboardData {

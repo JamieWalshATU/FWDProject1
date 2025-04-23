@@ -12,14 +12,17 @@ import {
   IonList,
   IonListHeader,
   IonItem,
-  IonAccordionGroup, IonButton } from '@ionic/angular/standalone';
+  IonAccordionGroup,
+  IonButton,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.page.html',
   styleUrls: ['./about.page.scss'],
   standalone: true,
-  imports: [IonButton, 
+  imports: [
+    IonButton,
     IonItem,
     IonList,
     IonContent,

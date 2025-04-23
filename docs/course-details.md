@@ -3,11 +3,11 @@
 **Source**: `src/app/core/features/courses/course-details/course-details.page.ts`
 
 ## Overview
+
 `CourseDetailsPage` displays a selected course's details, shows its question sets, embeds the `PdfParserComponent` to upload new questions, and lets instructor add/delete sets or start a quiz.
 
-
-
 ## Initialization
+
 ```ts
 ngOnInit(): void {
   this.route.paramMap.subscribe(params => {
@@ -25,9 +25,11 @@ ngOnInit(): void {
   });
 }
 ```
+
 - Subscribes to route, fetches course by `id`, sets color and image.
 
 ## Managing Question Sets
+
 ```ts
 viewQuestions(set: QuestionSet): void {
   this.selectedQuestionSet = set;
@@ -46,11 +48,13 @@ takeTest(set: QuestionSet): void {
   }
 }
 ```
+
 - `viewQuestions` selects and displays set.
 - `deleteSet` removes by ID and persists.
 - `takeTest` navigates to MCQ test.
 
 ## Template Highlights
+
 - `<ion-card>` showing course name, description
 - `<app-pdf-parser [id]="courseId" [color]="courseColor">`
 - `<ion-accordion-group>` listing question sets with badges
@@ -58,4 +62,4 @@ takeTest(set: QuestionSet): void {
 
 ---
 
-*End of CourseDetailsPage breakdown.*
+_End of CourseDetailsPage breakdown._
